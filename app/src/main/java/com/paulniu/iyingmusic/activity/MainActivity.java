@@ -1,8 +1,10 @@
-package com.paulniu.iyingmusic;
+package com.paulniu.iyingmusic.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.paulniu.iyingmusic.R;
 
 public class MainActivity extends AppCompatActivity {
 

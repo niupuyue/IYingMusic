@@ -15,7 +15,7 @@ import android.widget.RemoteViews;
 
 import com.paulniu.iyingmusic.Constant;
 import com.paulniu.iyingmusic.IMusicService;
-import com.paulniu.iyingmusic.MainActivity;
+import com.paulniu.iyingmusic.activity.MainActivity;
 import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.interfaces.IOnShakeListener;
 import com.paulniu.iyingmusic.model.MusicInfo;
