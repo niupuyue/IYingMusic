@@ -5,6 +5,12 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.paulniu.iyingmusic.utils.ImmersionBarUtils;
+
+import org.greenrobot.eventbus.EventBus;
+
+import java.lang.reflect.Method;
+
 /**
  * Coder: niupuyue (牛谱乐)
  * Date: 2020-01-05
@@ -34,5 +40,64 @@ public abstract class BaseActivity extends FragmentActivity {
         initViewById();
         initListener();
         initData();
+    }
+
+    /**
+     * 检查类中有是否有onEvent方法
+     */
+    protected boolean hasMethodOnEvent() {
+        boolean value = false;
+
+        try {
+            Method[] methods = this.getClass().getDeclaredMethods();
+            for (Method method : methods) {
+                if (method.getName().equalsIgnoreCase("onEvent")) {
+                    value = true;
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
+        return value;
+    }
+
+    public void initEventBus() {
+        try {
+            if (!EventBus.getDefault().isRegistered(this) && hasMethodOnEvent()) {
+                EventBus.getDefault().register(this);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void unRegisterEventbus() {
+        try {
+            if (EventBus.getDefault().isRegistered(this)) {
+                EventBus.getDefault().unregister(this);
+            }
+        } catch (IllegalArgumentException ie) {
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        unRegisterEventbus();
+    }
+
+    @Override
+    protected void onDestroy() {
+        try {
+            EventBus.getDefault().unregister(this);
+            ImmersionBarUtils.destory(this);
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        super.onDestroy();
     }
 }
