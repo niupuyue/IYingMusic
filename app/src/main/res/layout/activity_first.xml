@@ -6,7 +6,8 @@
     <FrameLayout
         android:id="@+id/flFirstActivityContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></FrameLayout>
+        android:layout_height="match_parent"
+        android:visibility="gone"></FrameLayout>
 
     <TextView
         android:id="@+id/tvFirstActivityCount"
@@ -14,8 +15,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
         android:background="@drawable/bg_first_activity_count"
         android:paddingLeft="10dp"
         android:paddingTop="4dp"
