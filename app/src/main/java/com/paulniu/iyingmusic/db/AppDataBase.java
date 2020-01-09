@@ -37,7 +37,14 @@ public abstract class AppDataBase extends RoomDatabase {
             // 创建本地歌曲表
             database.execSQL("CREATE TABLE IF NOT EXISTS `MusicInfo` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `songId` INTEGER NOT NULL, `albumId` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `musicName` TEXT, `artist` TEXT, `data` TEXT, `folder` TEXT, `musicNameKey` TEXT, `artistKey` TEXT, `favorite` INTEGER NOT NULL)");
             // 创建本地歌曲索引
-            database.execSQL("CREATE  INDEX `index_MusicInfo__id_songId_albumId` ON `${TABLE_NAME}` (`_id`, `songId`, `albumId`)");
+            database.execSQL("CREATE  INDEX `index_MusicInfo__id_songId_albumId` ON `MusicInfo` (`_id`, `songId`, `albumId`)");
+
+            // 删除本地歌曲文件夹表
+            database.execSQL("DROP TABLE IF EXISTS `FolderInfo`");
+            // 创建本地歌曲文件夹表
+            database.execSQL("CREATE TABLE IF NOT EXISTS `FolderInfo` (`folderId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,`folderName` TEXT NOT NULL,`folderPath` TEXT NOT NULL)");
+            // 创建本地歌曲文件夹索引
+            database.execSQL("CREATE INDEX `index_FolderInfo_folderId` ON `FolderInfo` (`folderId`)");
         }
     };
 
