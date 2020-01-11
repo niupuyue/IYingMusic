@@ -11,7 +11,10 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.paulniu.iyingmusic.Constant;
+import com.paulniu.iyingmusic.db.converters.MusicConverter;
+import com.paulniu.iyingmusic.db.dao.FolderInfoDao;
 import com.paulniu.iyingmusic.db.dao.MusicInfoDao;
+import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.model.MusicInfo;
 
 /**
@@ -21,13 +24,15 @@ import com.paulniu.iyingmusic.model.MusicInfo;
  * Desc: 数据库操作
  * Version:
  */
-@Database(entities = {MusicInfo.class}, version = 1)
-@TypeConverters({})
+@Database(entities = {MusicInfo.class, FolderInfo.class}, version = 1)
+@TypeConverters({MusicConverter.class})
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE = null;
 
     public abstract MusicInfoDao getMusicInfoDao();
+
+    public abstract FolderInfoDao getFolderInfoDao();
 
     public static final Migration mirgration_1_2 = new Migration(1, 2) {
         @Override

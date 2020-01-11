@@ -48,6 +48,12 @@ public abstract class MusicInfoDao {
     public abstract List<MusicInfo> getMusicByAlbumId(int albumId);
 
     /**
+     * 根据文件夹查找本地音乐
+     */
+    @Query("select * from MusicInfo where folder = :folderId")
+    public abstract List<MusicInfo> getMusicByFolder(int folderId);
+
+    /**
      * 根据音乐关键字查找本地音乐
      */
     @Query("select * from MusicInfo where musicNameKey like :musicNameKey")

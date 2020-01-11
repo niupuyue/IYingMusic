@@ -16,12 +16,19 @@ import java.util.List;
 public class MusicInfoSource {
 
     /**
-     * 获取所有本地语音消息
+     * 获取所有本地音乐列表
      *
      * @return
      */
     public static List<MusicInfo> getMusicInfos() {
         return AppDataBase.getInstance(App.getContext()).getMusicInfoDao().getAllMusic();
+    }
+
+    /**
+     * 根据本地音乐id获取音乐对象
+     */
+    public static MusicInfo getMusicInfo(int id){
+        return AppDataBase.getInstance(App.getContext()).getMusicInfoDao().getMusicById(id);
     }
 
 

@@ -35,6 +35,4 @@ public abstract class FolderInfoDao {
     @Query("select * from FolderInfo")
     public abstract List<FolderInfo> findAllFolder();
 
-
-
 }
