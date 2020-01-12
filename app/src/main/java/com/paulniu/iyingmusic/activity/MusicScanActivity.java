@@ -15,6 +15,7 @@ import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.adapter.MusicScanAdapter;
 import com.paulniu.iyingmusic.base.BaseActivity;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
+import com.paulniu.iyingmusic.db.source.MusicInfoSource;
 import com.paulniu.iyingmusic.model.MusicInfo;
 import com.paulniu.iyingmusic.model.event.OnFolderMusicListChangeEvent;
 import com.paulniu.iyingmusic.utils.MusicUtils;
@@ -155,7 +156,9 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
      */
     private void importMusics() {
         // 更改数据库中的数据
-
+        if (null != selectFolderInfo) {
+            MusicInfoSource.updateMusicInfoFolderId(selectMusicInfos, selectFolderInfo.folderId);
+        }
         // 导入音乐之后，发送event，通知文件夹列表更新
         OnFolderMusicListChangeEvent event = new OnFolderMusicListChangeEvent();
         EventBus.getDefault().post(event);

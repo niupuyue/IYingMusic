@@ -1,5 +1,7 @@
 package com.paulniu.iyingmusic.db.source;
 
+import android.content.Intent;
+
 import com.paulniu.iyingmusic.App;
 import com.paulniu.iyingmusic.db.AppDataBase;
 import com.paulniu.iyingmusic.model.MusicInfo;
@@ -27,10 +29,32 @@ public class MusicInfoSource {
     /**
      * 根据本地音乐id获取音乐对象
      */
-    public static MusicInfo getMusicInfo(int id){
+    public static MusicInfo getMusicInfo(int id) {
         return AppDataBase.getInstance(App.getContext()).getMusicInfoDao().getMusicById(id);
     }
 
+    /**
+     * 更新数据库音乐对象
+     */
+    public static void updateMusicInfos(List<MusicInfo> musicInfos) {
+        if (null == musicInfos || musicInfos.size() <= 0) {
+            return;
+        }
+        for (MusicInfo musicInfo : musicInfos) {
+            AppDataBase.getInstance(App.getContext()).getMusicInfoDao().update(musicInfo);
+        }
+    }
 
+    /**
+     * 批量更新数据库音乐对象的收藏文件夹
+     */
+    public static void updateMusicInfoFolderId(List<MusicInfo> musicInfos, int folderId) {
+        if (null == musicInfos || musicInfos.size() <= 0 || folderId <= 0) {
+            return;
+        }
+        for (MusicInfo musicInfo : musicInfos) {
+            AppDataBase.getInstance(App.getContext()).getMusicInfoDao().updateMusicInfoToFolderid(musicInfo, folderId);
+        }
+    }
 
 }

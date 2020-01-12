@@ -74,4 +74,15 @@ public abstract class MusicInfoDao {
             update(musicInfo);
         }
     }
+
+    /**
+     * 更新数据库中音乐对象的folderId
+     */
+    public void updateMusicInfoToFolderid(MusicInfo musicInfo, int folderId) {
+        if (null == musicInfo || folderId <= 0) {
+            return;
+        }
+        musicInfo.folder = String.valueOf(folderId);
+        update(musicInfo);
+    }
 }
