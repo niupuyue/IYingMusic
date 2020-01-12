@@ -30,6 +30,12 @@ public abstract class FolderInfoDao {
     public abstract void delete(FolderInfo... folderInfos);
 
     /**
+     * 根据id查找文件夹
+     */
+    @Query("select * from FolderInfo where folderId = :folderId")
+    public abstract FolderInfo findFolderById(int folderId);
+
+    /**
      * 查找本地所有存储的文件夹
      */
     @Query("select * from FolderInfo")

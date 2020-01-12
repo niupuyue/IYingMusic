@@ -5,7 +5,10 @@ import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
 
+import com.paulniu.iyingmusic.db.AppDataBase;
+import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.service.ServiceManager;
+import com.paulniu.iyingmusic.utils.SPUtils;
 
 import java.io.File;
 
@@ -40,10 +43,11 @@ public class App extends Application {
         mContext = getApplicationContext();
         mServiceManager = new ServiceManager(this);
         initPath();
+        initDatabase();
     }
 
     /**
-     * 初始化本地音乐下载路径
+     * 初始化本地音乐歌词下载路径
      */
     private void initPath() {
         String ROOT = "";
@@ -56,6 +60,21 @@ public class App extends Application {
         File lrcFile = new File(lrcPath);
         if (!lrcFile.exists()) {
             lrcFile.mkdirs();
+        }
+    }
+
+    /**
+     * 初始化数据库
+     * 为数据库添加默认的文件夹
+     */
+    private void initDatabase() {
+        if (SPUtils.getIsFirstOpen()) {
+            FolderInfo initFolder = new FolderInfo();
+            initFolder.folderName = "我的最爱";
+            initFolder.folderPath = "/";
+            AppDataBase.getInstance(App.getContext()).getFolderInfoDao().insert(initFolder);
+
+            SPUtils.setIsFirstOpen(false);
         }
     }
 }

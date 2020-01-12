@@ -19,8 +19,6 @@ public class MusicInfoSource {
 
     /**
      * 获取所有本地音乐列表
-     *
-     * @return
      */
     public static List<MusicInfo> getMusicInfos() {
         return AppDataBase.getInstance(App.getContext()).getMusicInfoDao().getAllMusic();

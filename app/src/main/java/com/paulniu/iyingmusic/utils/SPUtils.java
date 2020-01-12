@@ -15,6 +15,8 @@ import com.paulniu.iyingmusic.Constant;
  */
 public class SPUtils {
 
+    private static final String KEY_BOOLEAN_ISFIRSTOPEN = "isFirstOpen";
+
     private static final String KEY_BOOLEAN_ISSHAKE = "isShake";
 
     private static final String KEY_INT_MUSICSIZE = "musicSize";
@@ -26,6 +28,22 @@ public class SPUtils {
             sharedPreferences = App.getContext().getSharedPreferences(Constant.SP_NAME, Activity.MODE_PRIVATE);
         }
         return sharedPreferences;
+    }
+
+    /**
+     * 设置是否是第一次打开应用
+     */
+    public static void setIsFirstOpen(boolean isFirstOpen) {
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putBoolean(KEY_BOOLEAN_ISFIRSTOPEN, isFirstOpen);
+        editor.apply();
+    }
+
+    /**
+     * 获取是否是第一次打开应用
+     */
+    public static boolean getIsFirstOpen() {
+        return getSharedPreferences().getBoolean(KEY_BOOLEAN_ISFIRSTOPEN, true);
     }
 
     /**
@@ -51,9 +69,9 @@ public class SPUtils {
     /**
      * 设置获取音乐的最小限制
      */
-    public static void setMusicSizeLimit(int size){
+    public static void setMusicSizeLimit(int size) {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
-        editor.putInt(KEY_INT_MUSICSIZE,size);
+        editor.putInt(KEY_INT_MUSICSIZE, size);
         editor.apply();
     }
 
@@ -61,8 +79,8 @@ public class SPUtils {
      * 获取音乐的最小限制
      * 默认最小值是2M
      */
-    public static int getMusicSizeLimit(){
-        return getSharedPreferences().getInt(KEY_INT_MUSICSIZE,2);
+    public static int getMusicSizeLimit() {
+        return getSharedPreferences().getInt(KEY_INT_MUSICSIZE, 2);
     }
 
 }
