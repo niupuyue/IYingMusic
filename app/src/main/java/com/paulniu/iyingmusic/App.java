@@ -66,6 +66,7 @@ public class App extends Application {
     /**
      * 初始化数据库
      * 为数据库添加默认的文件夹
+     * 为数据库添加默认的音乐(并且把该音乐放在我的最爱中)
      */
     private void initDatabase() {
         if (SPUtils.getIsFirstOpen()) {
@@ -73,6 +74,7 @@ public class App extends Application {
             initFolder.folderName = "我的最爱";
             initFolder.folderPath = "/";
             AppDataBase.getInstance(App.getContext()).getFolderInfoDao().insert(initFolder);
+
 
             SPUtils.setIsFirstOpen(false);
         }
