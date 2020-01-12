@@ -26,7 +26,7 @@ public class App extends Application {
     private static Context mContext;
 
     public static Context getContext() {
-        return getContext();
+        return mContext;
     }
 
     public static App getApp() {
@@ -37,6 +37,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         mApp = this;
+        mContext = getApplicationContext();
         mServiceManager = new ServiceManager(this);
         initPath();
     }

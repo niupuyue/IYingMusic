@@ -15,7 +15,9 @@ import com.paulniu.iyingmusic.Constant;
  */
 public class SPUtils {
 
-    private static final String KEY_ISSHAKE = "isShake";
+    private static final String KEY_BOOLEAN_ISSHAKE = "isShake";
+
+    private static final String KEY_INT_MUSICSIZE = "musicSize";
 
     private static SharedPreferences sharedPreferences = null;
 
@@ -33,7 +35,7 @@ public class SPUtils {
      */
     public static void setShake(boolean isShake) {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
-        editor.putBoolean(KEY_ISSHAKE, isShake);
+        editor.putBoolean(KEY_BOOLEAN_ISSHAKE, isShake);
         editor.apply();
     }
 
@@ -43,7 +45,24 @@ public class SPUtils {
      * @return
      */
     public static boolean getShake() {
-        return getSharedPreferences().getBoolean(KEY_ISSHAKE, true);
+        return getSharedPreferences().getBoolean(KEY_BOOLEAN_ISSHAKE, true);
+    }
+
+    /**
+     * 设置获取音乐的最小限制
+     */
+    public static void setMusicSizeLimit(int size){
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putInt(KEY_INT_MUSICSIZE,size);
+        editor.apply();
+    }
+
+    /**
+     * 获取音乐的最小限制
+     * 默认最小值是2M
+     */
+    public static int getMusicSizeLimit(){
+        return getSharedPreferences().getInt(KEY_INT_MUSICSIZE,2);
     }
 
 }

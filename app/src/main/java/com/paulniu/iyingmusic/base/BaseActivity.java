@@ -29,6 +29,10 @@ public abstract class BaseActivity extends FragmentActivity {
 
     public abstract void initData();
 
+    public boolean needInitEvent(){
+        return false;
+    }
+
     public void initListener() {
     }
 
@@ -37,6 +41,9 @@ public abstract class BaseActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(initViewLayout());
         initExtraData();
+        if (needInitEvent()){
+            initEventBus();
+        }
         initViewById();
         initListener();
         initData();
@@ -88,6 +95,7 @@ public abstract class BaseActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         unRegisterEventbus();
+        super.onBackPressed();
     }
 
     @Override

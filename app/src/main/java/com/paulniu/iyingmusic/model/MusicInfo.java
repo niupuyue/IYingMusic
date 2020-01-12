@@ -6,6 +6,7 @@ import android.os.Parcelable;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
@@ -28,6 +29,7 @@ public class MusicInfo implements Parcelable {
     public static final String KEY_MUSIC_NAME = "musicname";
     public static final String KEY_ARTIST = "artist";
     public static final String KEY_DATA = "data";
+    public static final String KEY_SIZE = "size";
     public static final String KEY_FOLDER = "folder";
     public static final String KEY_MUSIC_NAME_KEY = "musicnamekey";
     public static final String KEY_ARTIST_KEY = "artistkey";
@@ -64,10 +66,15 @@ public class MusicInfo implements Parcelable {
     @ColumnInfo(name = "artist")
     public String artist;
     /**
-     * 数据库存储歌曲描述
+     * 数据库存储歌曲路径
      */
     @ColumnInfo(name = "data")
     public String data;
+    /**
+     * 数据库歌曲的大小
+     */
+    @ColumnInfo(name="size")
+    public int size;
     /**
      * 数据库存储歌曲文件夹名称
      */
@@ -89,6 +96,12 @@ public class MusicInfo implements Parcelable {
     @ColumnInfo(name = "favorite")
     public int favorite = 0;
 
+    /**
+     * 扫描本地音乐，当前音乐是否本选中
+     */
+    @Ignore
+    public boolean isChecked = false;
+
 
     public static final Creator<MusicInfo> CREATOR = new Creator<MusicInfo>() {
         @Override
@@ -103,6 +116,7 @@ public class MusicInfo implements Parcelable {
             music.musicName = bundle.getString(KEY_MUSIC_NAME);
             music.artist = bundle.getString(KEY_ARTIST);
             music.data = bundle.getString(KEY_DATA);
+            music.size = bundle.getInt(KEY_SIZE);
             music.folder = bundle.getString(KEY_FOLDER);
             music.musicNameKey = bundle.getString(KEY_MUSIC_NAME_KEY);
             music.favorite = bundle.getInt(KEY_FAVORITE);
@@ -130,6 +144,7 @@ public class MusicInfo implements Parcelable {
         bundle.putString(KEY_MUSIC_NAME, musicName);
         bundle.putString(KEY_ARTIST, artist);
         bundle.putString(KEY_DATA, data);
+        bundle.putInt(KEY_SIZE,size);
         bundle.putString(KEY_FOLDER, folder);
         bundle.putString(KEY_MUSIC_NAME_KEY, musicNameKey);
         bundle.putInt(KEY_FAVORITE, favorite);

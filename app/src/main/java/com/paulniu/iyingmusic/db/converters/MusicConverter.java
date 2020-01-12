@@ -1,5 +1,7 @@
 package com.paulniu.iyingmusic.db.converters;
 
+import androidx.room.TypeConverters;
+
 /**
  * Coder: niupuyue (牛谱乐)
  * Date: 2020-01-11

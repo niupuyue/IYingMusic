@@ -25,7 +25,7 @@ import com.paulniu.iyingmusic.model.MusicInfo;
  * Version:
  */
 @Database(entities = {MusicInfo.class, FolderInfo.class}, version = 1)
-@TypeConverters({MusicConverter.class})
+//@TypeConverters({MusicConverter.class})
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE = null;
@@ -40,7 +40,7 @@ public abstract class AppDataBase extends RoomDatabase {
             // 删除本地歌曲表
             database.execSQL("DROP TABLE IF EXISTS `MusicInfo`");
             // 创建本地歌曲表
-            database.execSQL("CREATE TABLE IF NOT EXISTS `MusicInfo` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `songId` INTEGER NOT NULL, `albumId` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `musicName` TEXT, `artist` TEXT, `data` TEXT, `folder` TEXT, `musicNameKey` TEXT, `artistKey` TEXT, `favorite` INTEGER NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `MusicInfo` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `songId` INTEGER NOT NULL, `albumId` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `musicName` TEXT, `artist` TEXT, `data` TEXT,`size` INTEGER, `folder` TEXT, `musicNameKey` TEXT, `artistKey` TEXT, `favorite` INTEGER NOT NULL)");
             // 创建本地歌曲索引
             database.execSQL("CREATE  INDEX `index_MusicInfo__id_songId_albumId` ON `MusicInfo` (`_id`, `songId`, `albumId`)");
 

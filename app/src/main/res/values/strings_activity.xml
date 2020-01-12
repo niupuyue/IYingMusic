@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- 扫描本地歌曲   -->
+    <string name="MusicScanActivity_title">扫描歌曲</string>
+    <string name="MusicScanActivity_start_scan">开始扫描</string>
+    <string name="MusicScanActivity_title_right">编辑</string>
+    <string name="MusicScanActivity_bottom_selectAll">全选</string>
+    <string name="MusicScanActivity_bottom_selectAll_confirm">确定导入</string>
+    <string name="MusicScanActivity_bottom_selectFolder">选择文件夹</string>
+
+</resources>

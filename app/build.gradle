@@ -52,5 +52,7 @@ dependencies {
     implementation 'com.android.support:multidex:1.0.1'
     // 状态栏
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3'
+    // BaseAdapter
+    implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30'
 
 }
