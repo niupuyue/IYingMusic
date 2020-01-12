@@ -93,6 +93,9 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
         if (null != tvMusicScanSelectFolder) {
             tvMusicScanSelectFolder.setOnClickListener(this);
         }
+        if (null != cbMusciScanSelectAll) {
+            cbMusciScanSelectAll.setOnCheckedChangeListener(this);
+        }
     }
 
     @Override
@@ -136,12 +139,10 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public void OnRightButtonClick(View v) {
                         // 设置列表中的编辑按钮可以点击
-                        if (null != adapter) {
-                            adapter.setCheckBoxVisiable();
-                            // 设置全选布局展示
-                            if (null != rlMusicScanSelectContainer) {
-                                rlMusicScanSelectContainer.setVisibility(View.VISIBLE);
-                            }
+                        setCheckBoxVisiable();
+                        // 设置全选布局展示
+                        if (null != rlMusicScanSelectContainer) {
+                            rlMusicScanSelectContainer.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -167,13 +168,37 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
 
     }
 
+    /**
+     * 设置item中的checkbox可见
+     */
+    public void setCheckBoxVisiable() {
+
+        if (null != adapter) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    /**
+     * 设置是否选中全部的checkbox
+     */
+    public void setCheckBoxSelectAll(boolean isSelectAll) {
+        if (null != musicInfos && musicInfos.size() > 0) {
+            for (int i = 0; i < musicInfos.size(); i++) {
+                if (null != musicInfos.get(i)) {
+                    musicInfos.get(i).isChecked = isSelectAll;
+                }
+            }
+        }
+        if (null != adapter) {
+            adapter.notifyDataSetChanged();
+        }
+    }
+
     @Override
     public void onCheckedChanged(CompoundButton compoundButton, boolean selectAll) {
         if (compoundButton.getId() == R.id.cbMusciScanSelectAll) {
             // 选择全部，获取取消选中全部
-            if (null != adapter) {
-                adapter.setCheckBoxSelectAll(selectAll);
-            }
+            setCheckBoxSelectAll(selectAll);
         }
     }
 

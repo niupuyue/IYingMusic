@@ -43,28 +43,6 @@ public class MusicScanAdapter extends BaseQuickAdapter<MusicInfo, BaseViewHolder
         // 设置图片 TODO 因为没有图片，所以暂时随机出来图片
     }
 
-    /**
-     * 设置item中的checkbox可见
-     */
-    public void setCheckBoxVisiable() {
-
-        notifyDataSetChanged();
-    }
-
-    /**
-     * 设置是否选中全部的checkbox
-     */
-    public void setCheckBoxSelectAll(boolean isSelectAll) {
-        if (null != musicInfos && musicInfos.size() > 0) {
-            for (int i = 0; i < musicInfos.size(); i++) {
-                if (null != musicInfos.get(i)) {
-                    musicInfos.get(i).isChecked = isSelectAll;
-                }
-            }
-        }
-        notifyDataSetChanged();
-    }
-
     class MusicScanViewHolder extends BaseViewHolder {
 
         private ImageView ivMusicScanItemAvator;
