@@ -12,5 +12,6 @@
     <color name="gray_333">#333333</color>
     <color name="gray_666">#666666</color>
     <color name="gray_999">#999999</color>
+    <color name="gray_ebeb">#ebebeb</color>
     <color name="red_4d52">#f04d52</color>
 </resources>

@@ -79,7 +79,7 @@ public class MusicInfo implements Parcelable {
      * 数据库存储歌曲文件夹名称
      */
     @ColumnInfo(name = "folder")
-    public String folder;
+    public int folder;
     /**
      * 数据库存储歌曲的名字关键字
      */
@@ -102,6 +102,9 @@ public class MusicInfo implements Parcelable {
     @Ignore
     public boolean isChecked = false;
 
+    @Ignore
+    public boolean isShowChecked = false;
+
 
     public static final Creator<MusicInfo> CREATOR = new Creator<MusicInfo>() {
         @Override
@@ -117,7 +120,7 @@ public class MusicInfo implements Parcelable {
             music.artist = bundle.getString(KEY_ARTIST);
             music.data = bundle.getString(KEY_DATA);
             music.size = bundle.getInt(KEY_SIZE);
-            music.folder = bundle.getString(KEY_FOLDER);
+            music.folder = bundle.getInt(KEY_FOLDER);
             music.musicNameKey = bundle.getString(KEY_MUSIC_NAME_KEY);
             music.favorite = bundle.getInt(KEY_FAVORITE);
             return music;
@@ -145,7 +148,7 @@ public class MusicInfo implements Parcelable {
         bundle.putString(KEY_ARTIST, artist);
         bundle.putString(KEY_DATA, data);
         bundle.putInt(KEY_SIZE,size);
-        bundle.putString(KEY_FOLDER, folder);
+        bundle.putInt(KEY_FOLDER, folder);
         bundle.putString(KEY_MUSIC_NAME_KEY, musicNameKey);
         bundle.putInt(KEY_FAVORITE, favorite);
         parcel.writeBundle(bundle);

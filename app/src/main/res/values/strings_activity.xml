@@ -5,8 +5,11 @@
     <string name="MusicScanActivity_title">扫描歌曲</string>
     <string name="MusicScanActivity_start_scan">开始扫描</string>
     <string name="MusicScanActivity_title_right">编辑</string>
+    <string name="MusicScanAcitivyt_title_cancel">取消</string>
     <string name="MusicScanActivity_bottom_selectAll">全选</string>
     <string name="MusicScanActivity_bottom_selectAll_confirm">确定导入</string>
     <string name="MusicScanActivity_bottom_selectFolder">选择文件夹</string>
+    <string name="MusicScanActivity_select_music_empty">请选择需要导入的音乐</string>
+    <string name="MusicScanActivity_import_music_success">导入成功</string>
 
 </resources>

@@ -24,7 +24,7 @@ public abstract class FolderInfoDao {
     public abstract void update(FolderInfo... folderInfos);
 
     @Insert
-    public abstract void insert(FolderInfo... folderInfos);
+    public abstract long[] insert(FolderInfo... folderInfos);
 
     @Delete
     public abstract void delete(FolderInfo... folderInfos);

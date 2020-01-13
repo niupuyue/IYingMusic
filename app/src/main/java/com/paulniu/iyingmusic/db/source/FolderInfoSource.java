@@ -33,19 +33,22 @@ public class FolderInfoSource {
     /**
      * 新建文件夹/更新文件夹
      */
-    public static void updateOrInsertFolder(FolderInfo folderInfo) {
+    public static long updateOrInsertFolder(FolderInfo folderInfo) {
         if (null == folderInfo) {
-            return;
+            return -1;
         }
         if (folderInfo.folderId <= 0) {
-            AppDataBase.getInstance(App.getContext()).getFolderInfoDao().insert(folderInfo);
+           return AppDataBase.getInstance(App.getContext()).getFolderInfoDao().insert(folderInfo)[0];
         } else {
             FolderInfo oldFolderInfo = getFolderInfoById(folderInfo.folderId);
             if (null != oldFolderInfo) {
                 folderInfo.folderId = oldFolderInfo.folderId;
-                AppDataBase.getInstance(App.getContext()).getFolderInfoDao().update(folderInfo);
+                 AppDataBase.getInstance(App.getContext()).getFolderInfoDao().update(folderInfo);
+                 // 如果返回0，表示更新成功 TODO
+                 return 0;
             }
         }
+        return -1;
     }
 
     /**

@@ -1,5 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- 声明权限弹窗 GrantPermissionPop -->
+    <string name="GrantPermissionPop_title">权限申请</string>
+    <string name="GrantPermissionPop_confirm">同意</string>
+    <string name="GrantPermissionPop_refuse">拒绝</string>
+    <string name="GrantPermissionPop_content">为了您更好的使用爱英音乐，需要获取本地存储，网络，定位等权限</string>
+    <string name="GrantPermissionPop_storage">本地存储</string>
+    <string name="GrantPermissionPop_net">网络</string>
+    <string name="GrantPermissionPop_location">定位</string>
 
+    <!-- 重新声明权限弹窗 ReGrantPermissionPop -->
+    <string name="ReGrantPermissionPop_content">需要获取本地存储，网络，定位等权限，否则不无法使用</string>
+    <string name="ReGrantPermissionPop_cancel">取消</string>
+    <string name="ReGrantPermissionPop_setting">去设置</string>
+
+    <!-- 选择导入的文件夹为空 MusicScanSelectEmptyFolderPop -->
+    <string name="MusicScanSelectEmptyFolderPop_title">提示</string>
+    <string name="MusicScanSelectEmptyFolderPop_content">没有选择导入的文件夹，默认导入我的最爱文件夹中</string>
+    <string name="MusicScanSelectEmptyFolderPop_content_hotword">我的最爱</string>
+    <string name="MusicScanSelectEmptyFolderPop_cancel">取消</string>
+    <string name="MusicScanSelectEmptyFolderPop_confirm">确认</string>
+
+    <!-- 选择需要导入的文件夹 MusicScanSelectFolderPop -->
+    <string name="MusicScanSelectFolderPop_title">选择文件夹</string>
+    <string name="MusicScanSelectFolderPop_new">新建</string>
+    <string name="MusicScanSelectFolderPop_new_input_hint">请输入文件夹名</string>
+    <string name="MusicScanSelectFolderPop_new_ok">确定</string>
+    <string name="MusicScanSelectFolderPop_new_cancel">取消</string>
+    <string name="MusicScanSelectFolderPop_input_folder_name_empty">请输入新建文件夹名称</string>
+    <string name="MusicScanSelectFolderPop_new_folder_fail">新建文件夹失败！</string>
+    <string name="MusicScanSelectFolderPop_new_folder_success">歌曲导入新建文件夹成功！</string>
 </resources>

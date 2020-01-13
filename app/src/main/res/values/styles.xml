@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!-- 透明渐变短动画 -->
+    <style name="FadeAnimationShort" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@anim/anim_pop_opaque</item>
+        <item name="android:windowExitAnimation">@anim/anim_pop_alpha</item>
+    </style>
+
 </resources>

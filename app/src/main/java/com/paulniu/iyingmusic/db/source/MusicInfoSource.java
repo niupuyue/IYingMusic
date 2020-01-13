@@ -4,6 +4,8 @@ import android.content.Intent;
 
 import com.paulniu.iyingmusic.App;
 import com.paulniu.iyingmusic.db.AppDataBase;
+import com.paulniu.iyingmusic.db.entity.FolderInfo;
+import com.paulniu.iyingmusic.db.entity.FolderInfoWithMusicCount;
 import com.paulniu.iyingmusic.model.MusicInfo;
 
 import java.util.List;
@@ -53,6 +55,13 @@ public class MusicInfoSource {
         for (MusicInfo musicInfo : musicInfos) {
             AppDataBase.getInstance(App.getContext()).getMusicInfoDao().updateMusicInfoToFolderid(musicInfo, folderId);
         }
+    }
+
+    /**
+     * 获取每个文件夹中音乐的数量
+     */
+    public static List<FolderInfoWithMusicCount> getFolderMusicCount(){
+        return AppDataBase.getInstance(App.getContext()).getMusicInfoDao().getFolderMusicCount();
     }
 
 }

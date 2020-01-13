@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
 import com.paulniu.iyingmusic.utils.ImmersionBarUtils;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,11 +37,14 @@ public abstract class BaseActivity extends FragmentActivity {
     public void initListener() {
     }
 
+    public RxPermissions rxPermissions;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(initViewLayout());
         initExtraData();
+        rxPermissions = new RxPermissions(this);
         if (needInitEvent()){
             initEventBus();
         }

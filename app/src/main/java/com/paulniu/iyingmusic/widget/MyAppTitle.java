@@ -171,6 +171,13 @@ public class MyAppTitle extends LinearLayout {
     }
 
     /**
+     * 获取右侧按钮的文字
+     */
+    public String getRightTitle(){
+        return mViewHolder.tvRight.getText().toString();
+    }
+
+    /**
      * 设置右侧按钮是否可用
      */
     public void setRightTitleEnable(boolean enable) {

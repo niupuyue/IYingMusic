@@ -8,6 +8,14 @@
     android:paddingRight="10dp"
     android:paddingBottom="5dp">
 
+    <CheckBox
+        android:id="@+id/cbMusicScanItemSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:visibility="gone" />
+
     <ImageView
         android:id="@+id/ivMusicScanItemAvator"
         android:layout_width="60dp"

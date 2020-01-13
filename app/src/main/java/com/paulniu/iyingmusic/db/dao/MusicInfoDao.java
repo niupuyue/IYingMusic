@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.paulniu.iyingmusic.db.entity.FolderInfo;
+import com.paulniu.iyingmusic.db.entity.FolderInfoWithMusicCount;
 import com.paulniu.iyingmusic.model.MusicInfo;
 
 import java.util.List;
@@ -60,6 +62,12 @@ public abstract class MusicInfoDao {
     public abstract List<MusicInfo> getMusicByMusicNameKey(String musicNameKey);
 
     /**
+     * 查询文件夹中音乐的数量
+     */
+    @Query("select FolderInfo.*,(select COUNT(*) FROM MusicInfo WHERE MusicInfo.folder = FolderInfo.folderId) AS musicCount from FolderInfo")
+    public abstract List<FolderInfoWithMusicCount> getFolderMusicCount();
+
+    /**
      * 更新/插入对象
      */
     public void updateOrInsert(MusicInfo musicInfo) {
@@ -82,7 +90,12 @@ public abstract class MusicInfoDao {
         if (null == musicInfo || folderId <= 0) {
             return;
         }
-        musicInfo.folder = String.valueOf(folderId);
-        update(musicInfo);
+        musicInfo.folder = folderId;
+        if (musicInfo._id <= 0) {
+            insert(musicInfo);
+        } else {
+            update(musicInfo);
+        }
+
     }
 }

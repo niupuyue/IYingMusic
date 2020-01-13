@@ -10,7 +10,7 @@ package com.paulniu.iyingmusic;
 public class Constant {
 
     // 数据库名
-    public static final String DATABASE_NAME = "iyingmusic";
+    public static final String DATABASE_NAME = "iyingmusic.db";
 
     // 播放模式
     public static final int MPM_LIST_LOOP_PLAY = 0; // 列表循环
