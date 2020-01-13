@@ -24,14 +24,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void initData() {
-        Button btn = findViewById(R.id.btn);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = MusicScanActivity.getIntent(MainActivity.this);
-                startActivity(intent);
-            }
-        });
+
     }
 
 }
