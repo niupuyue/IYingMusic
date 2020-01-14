@@ -36,7 +36,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     }
 
     private boolean mIsPrepareLogout = false;
-    private boolean mStateSaved = false;
 
     private DrawerLayout drawerLayout;
     private RelativeLayout rlMainContent;
@@ -65,7 +64,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-            mStateSaved = true;
         }
     }
 
@@ -149,7 +147,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 }
             });
         }
-        mStateSaved = false;
         if (null != drawerLayout) {
             // 设置初始状态是侧滑内容关闭
             drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
@@ -186,9 +183,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
         if (mIsPrepareLogout) {
             try {
-                if (!mStateSaved) {
-                    super.onBackPressed();
-                }
+                super.onBackPressed();
             } catch (Exception ex) {
                 Toast.makeText(this, getString(R.string.MainActivity_exit_error), Toast.LENGTH_SHORT).show();
                 System.exit(0);

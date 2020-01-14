@@ -45,7 +45,7 @@ public class FolderMusicAdapter extends BaseQuickAdapter<MusicInfo, FolderMusicA
         helper.tvFolderMusicItemDuration.setText(item.duration);
         helper.tvFolderMusicItemSize.setText(String.valueOf(item.size));
 
-        Glide.with(context).load(context.getResources().getDrawable(R.mipmap.ic_launcher_round)).into(helper.ivFolderMusicItemAvator);
+        Glide.with(context).load(context.getResources().getDrawable(R.mipmap.ic_launcher)).into(helper.ivFolderMusicItemAvator);
 
         helper.cbFolderMusicItemFavorite.setChecked(item.favorite == 0 ? false : true);
         helper.cbFolderMusicItemFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
