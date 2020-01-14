@@ -204,7 +204,7 @@ public class FirstActivity extends BaseActivity implements View.OnClickListener 
             return;
         }
         try {
-            tvFirstActivityCount.setText(value);
+            tvFirstActivityCount.setText(value + getString(R.string.FirstActivity_count));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -215,7 +215,7 @@ public class FirstActivity extends BaseActivity implements View.OnClickListener 
         if (handler != null) {
             handler.removeCallbacks(null);
         }
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = MainActivity.getIntent(this);
         startActivity(intent);
         finish();
     }

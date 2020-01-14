@@ -28,13 +28,7 @@ public class MyAppTitle extends LinearLayout {
     private OnRightButtonClickListener mRightButtonClickListener;
     private MyViewHolder mViewHolder;
     private int mRightRes;
-
-    public TextView getCenterTextView() {
-        if (null != mViewHolder) {
-            return mViewHolder.tvCenterTitle;
-        }
-        return null;
-    }
+    private int mLeftRes;
 
     public MyAppTitle(Context context) {
         super(context);
@@ -117,6 +111,42 @@ public class MyAppTitle extends LinearLayout {
     }
 
     /**
+     * 是否展示底部的线
+     */
+    public void resetLineVisibility(boolean value) {
+        mViewHolder.viewLineAt.setVisibility(value?View.VISIBLE: View.GONE);
+    }
+
+    /**
+     * 设置MyAppTitle的背景
+     */
+    public void setMyAppTitleBg(Drawable drawable){
+        if (null != mViewHolder.llMyAppTitleContainer && null != drawable){
+            mViewHolder.llMyAppTitleContainer.setBackground(drawable);
+        }
+    }
+
+    public void setMyAppTitleBg(int color){
+        if (color > 0){
+            setMyAppTitleBg(getResources().getColor(color));
+        }
+    }
+
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+    ////////////////设置主标题开始
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+
+    public TextView getCenterTextView() {
+        if (null != mViewHolder) {
+            return mViewHolder.tvCenterTitle;
+        }
+        return null;
+    }
+
+
+    /**
      * 设置标题
      */
     public void setAppTitle(String title) {
@@ -130,6 +160,18 @@ public class MyAppTitle extends LinearLayout {
         mViewHolder.tvCenterTitle.setText(resID);
     }
 
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+    ////////////////设置主标题结束
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+    ////////////////设置左侧按钮开始
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+
     /**
      * 设置左侧按钮内容
      */
@@ -137,6 +179,75 @@ public class MyAppTitle extends LinearLayout {
         mViewHolder.tvLeft.setCompoundDrawables(null, null, null, null);
         mViewHolder.tvLeft.setText(text);
     }
+
+    /**
+     * 获取左侧按钮的内容
+     */
+    public String getLeftTitle(){
+        return mViewHolder.tvLeft.getText().toString();
+    }
+
+    /**
+     * 左侧按钮是否显示
+     */
+    public boolean isLeftVisible(){
+        try {
+            return VISIBLE == mViewHolder.tvLeft.getVisibility();
+        }catch (Exception ex){
+            return false;
+        }
+    }
+
+    /**
+     * 设置左侧按钮是否可用
+     */
+    public void setLeftTitleEnable(boolean enable){
+        if (null != mViewHolder.tvLeft){
+            mViewHolder.tvLeft.setEnabled(enable);
+        }
+    }
+
+    /**
+     * 设置左侧图标
+     */
+    public void setLeftIcon(int leftIcon){
+        mLeftRes = leftIcon;
+        setLeftDrawable();
+    }
+
+    /**
+     * 设置左侧图标实际方法
+     */
+    private void setLeftDrawable(){
+        Drawable drawable = getResources().getDrawable(mLeftRes);
+        if (null != drawable){
+            drawable.setBounds(0,0,drawable.getIntrinsicWidth(),drawable.getIntrinsicHeight());
+            mViewHolder.tvLeft.setCompoundDrawables(drawable,null,null,null);
+        }
+    }
+
+    /**
+     * 重置左侧按钮(显示返回图标)
+     */
+    public void resetLeft() {
+        mViewHolder.tvLeft.setText("");
+        Drawable drawable = getResources().getDrawable(R.drawable.bg_title_back_selector);
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        mViewHolder.tvLeft.setCompoundDrawables(drawable, null, null, null);
+    }
+
+
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+    ////////////////设置左侧按钮结束
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+    ////////////////设置右侧按钮开始
+    //////////////////////////////////////////
+    //////////////////////////////////////////
 
     /**
      * 右侧按钮是否显示
@@ -147,20 +258,6 @@ public class MyAppTitle extends LinearLayout {
         } catch (Exception e) {
             return false;
         }
-    }
-
-    /**
-     * 是否展示底部的线
-     */
-    public void resetLineVisibility(boolean value) {
-        mViewHolder.viewLineAt.setVisibility(value?View.VISIBLE: View.GONE);
-    }
-
-    public void resetLeft() {
-            mViewHolder.tvLeft.setText("");
-            Drawable drawable = getResources().getDrawable(R.drawable.bg_title_back_selector);
-            drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-            mViewHolder.tvLeft.setCompoundDrawables(drawable, null, null, null);
     }
 
     /**
@@ -197,11 +294,17 @@ public class MyAppTitle extends LinearLayout {
         mViewHolder.tvRight.setTextColor(colorResourceID);
     }
 
+    /**
+     * 设置右侧图标
+     */
     public void setRightIcon(int sourceId) {
         mRightRes = sourceId;
         setRightDrawable();
     }
 
+    /**
+     * 设置右侧图标实际方法
+     */
     private void setRightDrawable() {
         Drawable drawable = getResources().getDrawable(mRightRes);
         if (null != drawable) {
@@ -209,6 +312,12 @@ public class MyAppTitle extends LinearLayout {
             mViewHolder.tvRight.setCompoundDrawables(drawable, null, null, null);
         }
     }
+
+    //////////////////////////////////////////
+    //////////////////////////////////////////
+    ////////////////设置右侧按钮结束
+    //////////////////////////////////////////
+    //////////////////////////////////////////
 
     public void setOnLeftButtonClickListener(OnLeftButtonClickListener listen) {
         mLeftButtonClickListener = listen;
@@ -231,12 +340,15 @@ public class MyAppTitle extends LinearLayout {
         TextView tvCenterTitle;
         TextView tvRight;
         View viewLineAt;
+        LinearLayout llMyAppTitleContainer;
 
         public MyViewHolder(View v) {
             tvLeft = v.findViewById(R.id.tvLeft);
             tvCenterTitle = v.findViewById(R.id.tvCenterTitle);
             tvRight = v.findViewById(R.id.tvRight);
             viewLineAt = v.findViewById(R.id.viewLineAt);
+
+            llMyAppTitleContainer = v.findViewById(R.id.llMyAppTitleContainer);
         }
     }
 

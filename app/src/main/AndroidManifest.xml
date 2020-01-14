@@ -34,6 +34,10 @@
 
         <activity android:name=".activity.MusicScanActivity" />
 
+        <activity android:name=".activity.SettingActivity" />
+
+        <activity android:name=".activity.WelcomeActivity" />
+
     </application>
 
 </manifest>

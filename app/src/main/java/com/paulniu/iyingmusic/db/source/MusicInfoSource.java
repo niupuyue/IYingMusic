@@ -27,6 +27,16 @@ public class MusicInfoSource {
     }
 
     /**
+     * 根据文件夹id获取音乐
+     */
+    public static List<MusicInfo> getMusicInfosByFolderId(int folderId){
+        if (folderId <= 0){
+            return null;
+        }
+        return AppDataBase.getInstance(App.getContext()).getMusicInfoDao().getMusicByFolder(folderId);
+    }
+
+    /**
      * 根据本地音乐id获取音乐对象
      */
     public static MusicInfo getMusicInfo(int id) {

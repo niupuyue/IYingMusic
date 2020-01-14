@@ -1,6 +1,5 @@
 package com.paulniu.iyingmusic.db.entity;
 
-import androidx.room.Ignore;
 
 /**
  * Coder: niupuyue
