@@ -1,6 +1,5 @@
 package com.paulniu.iyingmusic.activity;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.drawerlayout.widget.DrawerLayout.SimpleDrawerListener;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -22,10 +21,8 @@ import android.widget.Toast;
 import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.adapter.MainFolderAdapter;
 import com.paulniu.iyingmusic.base.BaseActivity;
-import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.db.entity.FolderInfoWithMusicCount;
 import com.paulniu.iyingmusic.db.source.MusicInfoSource;
-import com.paulniu.iyingmusic.model.MusicInfo;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 
 import java.util.ArrayList;

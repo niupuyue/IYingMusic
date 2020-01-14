@@ -31,7 +31,6 @@ import com.paulniu.iyingmusic.widget.pop.MusicScanSelectFolderPop;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -44,8 +43,7 @@ import java.util.List;
 public class MusicScanActivity extends BaseActivity implements View.OnClickListener, CompoundButton.OnCheckedChangeListener, IOnMusicScanSelectMusicListener {
 
     public static Intent getIntent(Context context) {
-        Intent intent = new Intent(context, MusicScanActivity.class);
-        return intent;
+        return new Intent(context, MusicScanActivity.class);
     }
 
     private MyAppTitle myAppTitle;
