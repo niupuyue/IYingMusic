@@ -2,12 +2,19 @@ package com.paulniu.iyingmusic.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
+
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.paulniu.iyingmusic.R;
+import com.paulniu.iyingmusic.adapter.FolderMusicAdapter;
 import com.paulniu.iyingmusic.base.BaseActivity;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.db.source.MusicInfoSource;
+import com.paulniu.iyingmusic.interfaces.IOnFolderMusicListener;
 import com.paulniu.iyingmusic.model.MusicInfo;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 
@@ -21,7 +28,7 @@ import java.util.List;
  * Desc: 文件夹详情页面
  * Version:
  */
-public class FolderWithMusicListActivity extends BaseActivity implements View.OnClickListener {
+public class FolderWithMusicListActivity extends BaseActivity implements View.OnClickListener, IOnFolderMusicListener {
 
     private static String EXTRA_OBJECT_FOLDERINFO = "folderInfo";
 
@@ -32,9 +39,13 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
     }
 
     private MyAppTitle myAppTitle;
+    private RecyclerView rvFolderWithMusicList;
+    private LinearLayout llFolderWithMusicListContainer;
+    private View viewErrorFolderMusic;
 
     private List<MusicInfo> musicInfos = new ArrayList<>();
     private FolderInfo folderInfo;
+    private FolderMusicAdapter adapter;
 
     @Override
     public int initViewLayout() {
@@ -49,6 +60,11 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
     @Override
     public void initViewById() {
         myAppTitle = findViewById(R.id.myAppTitle);
+
+        llFolderWithMusicListContainer = findViewById(R.id.llFolderWithMusicListContainer);
+        rvFolderWithMusicList = findViewById(R.id.rvFolderWithMusicList);
+
+        viewErrorFolderMusic = findViewById(R.id.viewErrorFolderMusic);
     }
 
     @Override
@@ -61,14 +77,70 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
         }
         // 根据folderId查找音乐
         if (null != musicInfos) {
+            if (null != viewErrorFolderMusic) {
+                viewErrorFolderMusic.setVisibility(View.GONE);
+            }
+            if (null != llFolderWithMusicListContainer) {
+                llFolderWithMusicListContainer.setVisibility(View.GONE);
+            }
             musicInfos.clear();
             musicInfos = MusicInfoSource.getMusicInfosByFolderId(folderInfo.folderId);
+            adapter = new FolderMusicAdapter(R.layout.item_folder_music, musicInfos, this);
+            LinearLayoutManager manager = new LinearLayoutManager(this);
+            rvFolderWithMusicList.setLayoutManager(manager);
+            rvFolderWithMusicList.setAdapter(adapter);
+        } else {
+            if (null != viewErrorFolderMusic) {
+                viewErrorFolderMusic.setVisibility(View.VISIBLE);
+            }
+            if (null != llFolderWithMusicListContainer) {
+                llFolderWithMusicListContainer.setVisibility(View.GONE);
+            }
+        }
+    }
 
+    @Override
+    public void initListener() {
+        if (null != viewErrorFolderMusic) {
+            viewErrorFolderMusic.setOnClickListener(this);
+        }
+    }
+
+    @Override
+    public void onFavorite(MusicInfo musicInfo, boolean isFavorite) {
+        if (null != musicInfos && musicInfos.size() > 0 && null != musicInfo) {
+            int position = -1;
+            for (int i = 0; i < musicInfos.size(); i++) {
+                if (null != musicInfos.get(i) && TextUtils.equals(musicInfo.data, musicInfos.get(i).data) && TextUtils.equals(musicInfo.musicName, musicInfos.get(i).musicName)) {
+                    position = i;
+                    break;
+                }
+            }
+            musicInfos.get(position).favorite = isFavorite ? 1 : 0;
+            if (null != adapter) {
+                adapter.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void onMusicItemClick(MusicInfo musicInfo) {
+        if (null != musicInfo) {
+            // 点击音乐播放
         }
     }
 
     @Override
     public void onClick(View v) {
-
+        if (null == v) {
+            return;
+        }
+        switch (v.getId()) {
+            case R.id.viewErrorFolderMusic:
+                // 重新加载数据
+                initData();
+                break;
+        }
     }
+
 }

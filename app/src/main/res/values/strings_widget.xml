@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--文件夹音乐列表加载错误页面-->
+    <string name="viewErrorFolderMusic_title">加载错误，点击重试...</string>
+
     <!-- 声明权限弹窗 GrantPermissionPop -->
     <string name="GrantPermissionPop_title">权限申请</string>
     <string name="GrantPermissionPop_confirm">同意</string>

@@ -26,13 +26,20 @@
             android:layout_below="@id/myAppTitle"
             android:orientation="vertical">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMainFolderList"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="" />
+                android:orientation="vertical">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMainFolderList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    tools:listitem="@layout/item_main_folder" />
+
+            </LinearLayout>
 
             <View
                 android:layout_width="match_parent"
