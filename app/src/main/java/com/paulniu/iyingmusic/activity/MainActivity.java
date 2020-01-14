@@ -1,5 +1,6 @@
 package com.paulniu.iyingmusic.activity;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.drawerlayout.widget.DrawerLayout.SimpleDrawerListener;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -159,11 +160,11 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
         // 获取本地文件夹列表
         folderList = MusicInfoSource.getFolderMusicCount();
-        if (null != folderList && folderList.size() > 0){
-            if (null != rvMainFolderList){
-                GridLayoutManager manager = new GridLayoutManager(this,3);
+        if (null != folderList && folderList.size() > 0) {
+            if (null != rvMainFolderList) {
+                GridLayoutManager manager = new GridLayoutManager(this, 3);
                 rvMainFolderList.setLayoutManager(manager);
-                adapter = new MainFolderAdapter(R.layout.item_main_folder,folderList);
+                adapter = new MainFolderAdapter(R.layout.item_main_folder, folderList);
                 rvMainFolderList.setAdapter(adapter);
             }
         }
@@ -227,6 +228,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.llExit:
                 // 退出应用
+                System.exit(0);
                 break;
             case R.id.tvMainCurrMusicPlayState:
                 // 继续播放当前音乐
