@@ -17,6 +17,7 @@
 
         <CheckBox
             android:id="@+id/cbFolderMusicItemFavorite"
+            style="@style/style_music_item_favorite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 

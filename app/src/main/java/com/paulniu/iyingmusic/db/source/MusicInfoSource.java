@@ -58,12 +58,12 @@ public class MusicInfoSource {
     /**
      * 批量更新数据库音乐对象的收藏文件夹
      */
-    public static void updateMusicInfoFolderId(List<MusicInfo> musicInfos, int folderId) {
+    public static void updateMusicInfoFolderId(List<MusicInfo> musicInfos, int folderId,boolean isFavorite) {
         if (null == musicInfos || musicInfos.size() <= 0 || folderId <= 0) {
             return;
         }
         for (MusicInfo musicInfo : musicInfos) {
-            AppDataBase.getInstance(App.getContext()).getMusicInfoDao().updateMusicInfoToFolderid(musicInfo, folderId);
+            AppDataBase.getInstance(App.getContext()).getMusicInfoDao().updateMusicInfoToFolderid(musicInfo, folderId,isFavorite);
         }
     }
 
@@ -72,6 +72,15 @@ public class MusicInfoSource {
      */
     public static List<FolderInfoWithMusicCount> getFolderMusicCount(){
         return AppDataBase.getInstance(App.getContext()).getMusicInfoDao().getFolderMusicCount();
+    }
+
+    /**
+     * 修改音乐是否是我的最爱
+     */
+    public static void updateMusicInfoToFavorite(MusicInfo musicInfo,boolean isFavorite){
+        if (null != musicInfo && musicInfo._id > 0){
+            AppDataBase.getInstance(App.getContext()).getMusicInfoDao().updateMusicInfoToFavorite(musicInfo,isFavorite);
+        }
     }
 
 }

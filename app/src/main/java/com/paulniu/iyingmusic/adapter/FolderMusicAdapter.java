@@ -42,7 +42,7 @@ public class FolderMusicAdapter extends BaseQuickAdapter<MusicInfo, FolderMusicA
         helper.tvFolderMusicItemName.setText(item.musicName);
         helper.tvFolderMusicItemArtist.setText(item.artist);
         helper.tvFolderMusicItemPath.setText(item.data);
-        helper.tvFolderMusicItemDuration.setText(item.duration);
+        helper.tvFolderMusicItemDuration.setText(String.valueOf(item.duration));
         helper.tvFolderMusicItemSize.setText(String.valueOf(item.size));
 
         Glide.with(context).load(context.getResources().getDrawable(R.mipmap.ic_launcher)).into(helper.ivFolderMusicItemAvator);
@@ -53,6 +53,15 @@ public class FolderMusicAdapter extends BaseQuickAdapter<MusicInfo, FolderMusicA
             public void onCheckedChanged(CompoundButton compoundButton, boolean favorite) {
                 if (null != listener) {
                     listener.onFavorite(item, favorite);
+                }
+            }
+        });
+
+        helper.llFolderMusicItemContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (null != listener){
+                    listener.onMusicItemClick(item);
                 }
             }
         });

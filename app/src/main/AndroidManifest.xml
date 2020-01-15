@@ -37,6 +37,7 @@
 
         <activity android:name=".activity.WelcomeActivity" />
 
+        <activity android:name=".activity.FolderWithMusicListActivity" />
     </application>
 
 </manifest>

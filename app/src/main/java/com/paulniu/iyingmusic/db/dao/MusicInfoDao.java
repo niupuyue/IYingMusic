@@ -86,16 +86,31 @@ public abstract class MusicInfoDao {
     /**
      * 更新数据库中音乐对象的folderId
      */
-    public void updateMusicInfoToFolderid(MusicInfo musicInfo, int folderId) {
+    public void updateMusicInfoToFolderid(MusicInfo musicInfo, int folderId, boolean isFavorite) {
         if (null == musicInfo || folderId <= 0) {
             return;
         }
         musicInfo.folder = folderId;
+        musicInfo.favorite = isFavorite ? 1 : 0;
         if (musicInfo._id <= 0) {
             insert(musicInfo);
         } else {
             update(musicInfo);
         }
+    }
 
+
+    /**
+     * 更新音乐文件是否加入我的最爱
+     */
+    public void updateMusicInfoToFavorite(MusicInfo musicInfo, boolean isFavorite) {
+        if (null == musicInfo && musicInfo._id <= 0) {
+            return;
+        }
+        MusicInfo oldMusicInfo = getMusicById(musicInfo._id);
+        if (null != oldMusicInfo) {
+            oldMusicInfo.favorite = isFavorite ? 1 : 0;
+        }
+        update(oldMusicInfo);
     }
 }

@@ -14,4 +14,9 @@
         <item name="android:windowExitAnimation">@anim/anim_pop_alpha</item>
     </style>
 
+    <!-- 音乐加入我的喜欢 -->
+    <style name="style_music_item_favorite" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/music_item_favorite_style</item>
+    </style>
+
 </resources>

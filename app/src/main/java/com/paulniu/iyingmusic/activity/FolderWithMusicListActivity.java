@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,7 +82,7 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
                 viewErrorFolderMusic.setVisibility(View.GONE);
             }
             if (null != llFolderWithMusicListContainer) {
-                llFolderWithMusicListContainer.setVisibility(View.GONE);
+                llFolderWithMusicListContainer.setVisibility(View.VISIBLE);
             }
             musicInfos.clear();
             musicInfos = MusicInfoSource.getMusicInfosByFolderId(folderInfo.folderId);
@@ -120,6 +121,9 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
             if (null != adapter) {
                 adapter.notifyDataSetChanged();
             }
+            // 将修改内容写入数据库
+            MusicInfoSource.updateMusicInfoToFavorite(musicInfo, isFavorite);
+            Toast.makeText(this, getString(R.string.FolderWithMusicListActivity_add_myfavorite_success), Toast.LENGTH_SHORT).show();
         }
     }
 

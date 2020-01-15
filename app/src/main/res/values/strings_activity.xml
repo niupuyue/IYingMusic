@@ -23,4 +23,7 @@
     <string name="MusicScanActivity_select_music_empty">请选择需要导入的音乐</string>
     <string name="MusicScanActivity_import_music_success">导入成功</string>
 
+    <!-- 文件夹音乐列表 FolderWithMusicListActivity -->
+    <string name="FolderWithMusicListActivity_add_myfavorite_success">加入我的最爱成功！</string>
+
 </resources>

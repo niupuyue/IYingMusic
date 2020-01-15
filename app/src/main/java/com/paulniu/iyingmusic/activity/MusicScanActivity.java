@@ -201,7 +201,7 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
         // 更改数据库中的数据
         if (null != selectFolderInfo) {
             if (null != selectMusicInfos && selectMusicInfos.size() > 0) {
-                MusicInfoSource.updateMusicInfoFolderId(selectMusicInfos, selectFolderInfo.folderId);
+                MusicInfoSource.updateMusicInfoFolderId(selectMusicInfos, selectFolderInfo.folderId,selectFolderInfo.folderId == FolderInfoSource.getDefaultFolder().folderId);
                 // 导入音乐之后，发送event，通知文件夹列表更新
                 OnFolderMusicListChangeEvent event = new OnFolderMusicListChangeEvent();
                 EventBus.getDefault().post(event);
