@@ -169,7 +169,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                                 folderInfoWithMusicCount.folderName = createInfo.folderName;
                                 folderInfoWithMusicCount.folderPath = createInfo.folderPath;
                                 folderInfoWithMusicCount.musicCount = 0;
-                                if (null != adapter){
+                                if (null != adapter) {
                                     adapter.addData(folderInfoWithMusicCount);
                                     adapter.notifyDataSetChanged();
                                 }
@@ -181,7 +181,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
                         }
                     });
-                    folderAddDialog.show(getSupportFragmentManager(),MainActivity.this.getLocalClassName());
+                    folderAddDialog.show(getSupportFragmentManager(), MainActivity.this.getLocalClassName());
                 }
             });
         }
@@ -196,7 +196,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (null != rvMainFolderList) {
                 GridLayoutManager manager = new GridLayoutManager(this, 3);
                 rvMainFolderList.setLayoutManager(manager);
-                adapter = new MainFolderAdapter(this,R.layout.item_main_folder, folderList);
+                adapter = new MainFolderAdapter(this, R.layout.item_main_folder, folderList);
                 rvMainFolderList.setAdapter(adapter);
             }
         }

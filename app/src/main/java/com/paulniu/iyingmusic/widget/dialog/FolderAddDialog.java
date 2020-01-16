@@ -45,7 +45,7 @@ public class FolderAddDialog extends BaseDialog implements View.OnClickListener 
 
     private String type = TYPE_NEW;
 
-    public FolderAddDialog(String type){
+    public FolderAddDialog(String type) {
         this.type = type;
     }
 
@@ -82,27 +82,27 @@ public class FolderAddDialog extends BaseDialog implements View.OnClickListener 
         }
     }
 
-    private void initData(){
-        if (TextUtils.equals(type,TYPE_NEW)){
+    private void initData() {
+        if (TextUtils.equals(type, TYPE_NEW)) {
             // 新建文件夹
-            if (null != tvFolderAddDialogTitle){
+            if (null != tvFolderAddDialogTitle) {
                 tvFolderAddDialogTitle.setText(getString(R.string.MainActivity_add_folder_dialog_title));
             }
-            if (null != etDialogFolderInput){
+            if (null != etDialogFolderInput) {
                 etDialogFolderInput.setHint(getString(R.string.MainActivity_add_folder_dialog_input_hint));
             }
-            if (null != tvDialogFolderAddConfirm){
+            if (null != tvDialogFolderAddConfirm) {
                 tvDialogFolderAddConfirm.setText(getString(R.string.MainActivity_add_folder_dialog_add));
             }
-        }else if (TextUtils.equals(type,TYPE_RENAME)){
+        } else if (TextUtils.equals(type, TYPE_RENAME)) {
             // 重命名文件夹
-            if (null != tvFolderAddDialogTitle){
+            if (null != tvFolderAddDialogTitle) {
                 tvFolderAddDialogTitle.setText(getString(R.string.MainActivity_rename_folder_title));
             }
-            if (null != etDialogFolderInput){
+            if (null != etDialogFolderInput) {
                 etDialogFolderInput.setHint(getString(R.string.MainActivity_rename_folder_input_hint));
             }
-            if (null != tvDialogFolderAddConfirm){
+            if (null != tvDialogFolderAddConfirm) {
                 tvDialogFolderAddConfirm.setText(getString(R.string.MainActivity_rename_folder_confirm));
             }
         }
