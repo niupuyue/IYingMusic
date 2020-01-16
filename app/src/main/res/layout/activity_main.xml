@@ -12,6 +12,7 @@
         android:id="@+id/rlMainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gray_ebef"
         android:orientation="vertical">
 
         <com.paulniu.iyingmusic.widget.MyAppTitle
@@ -35,7 +36,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvMainFolderList"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     tools:listitem="@layout/item_main_folder" />
 
@@ -51,6 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
+                android:background="@color/white_fff"
                 android:minHeight="50dp"
                 android:orientation="horizontal">
 

@@ -11,6 +11,22 @@
     <string name="MainActivity_slide_music_scan">扫描歌曲</string>
     <string name="MainActivity_slide_setting">设置</string>
     <string name="MainActivity_slide_exit">退出</string>
+    <string name="MainActivity_add_folder_dialog_title">新建文件夹</string>
+    <string name="MainActivity_add_folder_dialog_input_hint">请输入新建文件夹名称</string>
+    <string name="MainActivity_add_folder_dialog_add">新建</string>
+    <string name="MainActivity_add_folder_dialog_cancel">取消</string>
+    <string name="MainActivity_folder_operation_title">操作</string>
+    <string name="MainActivity_folder_operation_delete">删除</string>
+    <string name="MainActivity_folder_operation_rename">重命名</string>
+    <string name="MainActivity_add_folder_dialog_foldername_empty">文件夹名称为空！</string>
+    <string name="MainActivity_add_folder_dialog_success">添加文件夹成功！</string>
+    <string name="MainActivity_delete_title">是否需要删除该文件夹？\n删除之后收藏的歌曲会被删除</string>
+    <string name="MainActivity_delete_cancel">取消</string>
+    <string name="MainActivity_delete_delete">删除</string>
+    <string name="MainActivity_delete_success">删除成功！</string>
+    <string name="MainActivity_rename_folder_title">重命名文件夹</string>
+    <string name="MainActivity_rename_folder_input_hint">请输入新命名的文件夹名称</string>
+    <string name="MainActivity_rename_folder_confirm">修改</string>
 
     <!-- 扫描本地歌曲   -->
     <string name="MusicScanActivity_title">扫描歌曲</string>

@@ -75,6 +75,12 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
         }
         if (null != myAppTitle) {
             myAppTitle.setAppTitle(folderInfo.folderName);
+            myAppTitle.setOnLeftButtonClickListener(new MyAppTitle.OnLeftButtonClickListener() {
+                @Override
+                public void onLeftButtonClick(View v) {
+                    onBackPressed();
+                }
+            });
         }
         // 根据folderId查找音乐
         if (null != musicInfos) {

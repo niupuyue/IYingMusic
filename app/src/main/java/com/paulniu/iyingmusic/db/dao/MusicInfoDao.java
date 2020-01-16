@@ -32,6 +32,12 @@ public abstract class MusicInfoDao {
     public abstract void delete(MusicInfo... musicInfos);
 
     /**
+     * 根据本地索引id找到音乐对象
+     */
+    @Query("select * from MusicInfo where _id = :id")
+    public abstract MusicInfo getMusicById(int id);
+
+    /**
      * 找到所有的本地存储的音乐
      */
     @Query("select * from MusicInfo")
@@ -40,8 +46,8 @@ public abstract class MusicInfoDao {
     /**
      * 根据id找到本地音乐
      */
-    @Query("select * from MusicInfo where songId = :id")
-    public abstract MusicInfo getMusicById(int id);
+    @Query("select * from MusicInfo where songId = :songId")
+    public abstract MusicInfo getMusicBySongId(int songId);
 
     /**
      * 根据分类查找本地音乐

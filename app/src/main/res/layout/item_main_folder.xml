@@ -1,50 +1,60 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/transparent"
     android:orientation="vertical">
 
-    <RelativeLayout
-        android:id="@+id/rlMainFolderContainer"
-        android:layout_width="90dp"
-        android:layout_height="90dp"
-        android:layout_margin="10dp"
+    <LinearLayout
+        android:id="@+id/llMainFolderContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
         android:background="@drawable/selector_bg_white"
-        android:padding="5dp">
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:src="@mipmap/ic_main_folder" />
-
-        <TextView
-            android:id="@+id/tvMainFolderItemCount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:text=""
-            android:textColor="@color/gray_666"
-            android:textSize="12sp" />
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/tvMainFolderItemName"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:layout_marginTop="20dp"
             android:ellipsize="end"
+            android:gravity="center"
             android:maxLines="1"
             android:singleLine="true"
             android:text="123"
             android:textColor="@color/gray_333"
             android:textSize="14sp" />
 
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:padding="5dp">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_main_folder" />
+
+            <TextView
+                android:id="@+id/tvMainFolderItemCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text="123"
+                android:textColor="@color/gray_666"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

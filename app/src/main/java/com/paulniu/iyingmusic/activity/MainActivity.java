@@ -21,9 +21,12 @@ import android.widget.Toast;
 import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.adapter.MainFolderAdapter;
 import com.paulniu.iyingmusic.base.BaseActivity;
+import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.db.entity.FolderInfoWithMusicCount;
+import com.paulniu.iyingmusic.db.source.FolderInfoSource;
 import com.paulniu.iyingmusic.db.source.MusicInfoSource;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
+import com.paulniu.iyingmusic.widget.dialog.FolderAddDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,12 +141,47 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             myAppTitle.setAppTitle(R.string.MainActivity_title);
             myAppTitle.initViewsVisible(true, true, true, true);
             myAppTitle.setLeftIcon(R.mipmap.ic_main_sort);
+            myAppTitle.setRightIcon(R.mipmap.ic_main_add);
             myAppTitle.setOnLeftButtonClickListener(new MyAppTitle.OnLeftButtonClickListener() {
                 @Override
                 public void onLeftButtonClick(View v) {
                     if (null != drawerLayout) {
                         drawerLayout.openDrawer(Gravity.LEFT);
                     }
+                }
+            });
+            myAppTitle.setOnRightButtonClickListener(new MyAppTitle.OnRightButtonClickListener() {
+                @Override
+                public void OnRightButtonClick(View v) {
+                    FolderAddDialog folderAddDialog = new FolderAddDialog(FolderAddDialog.TYPE_NEW);
+                    folderAddDialog.setListener(new FolderAddDialog.IFolderAddDialogListener() {
+                        @Override
+                        public void onConfirm(String folderName) {
+                            FolderInfo createInfo = new FolderInfo();
+                            createInfo.folderPath = null;
+                            createInfo.folderName = folderName;
+                            long folderId = FolderInfoSource.updateOrInsertFolder(createInfo);
+                            if (folderId > 0) {
+                                // 创建成功
+                                Toast.makeText(MainActivity.this, getString(R.string.MainActivity_add_folder_dialog_success), Toast.LENGTH_SHORT).show();
+                                FolderInfoWithMusicCount folderInfoWithMusicCount = new FolderInfoWithMusicCount();
+                                folderInfoWithMusicCount.folderId = (int) folderId;
+                                folderInfoWithMusicCount.folderName = createInfo.folderName;
+                                folderInfoWithMusicCount.folderPath = createInfo.folderPath;
+                                folderInfoWithMusicCount.musicCount = 0;
+                                if (null != adapter){
+                                    adapter.addData(folderInfoWithMusicCount);
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
+                    folderAddDialog.show(getSupportFragmentManager(),MainActivity.this.getLocalClassName());
                 }
             });
         }
@@ -158,7 +196,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             if (null != rvMainFolderList) {
                 GridLayoutManager manager = new GridLayoutManager(this, 3);
                 rvMainFolderList.setLayoutManager(manager);
-                adapter = new MainFolderAdapter(R.layout.item_main_folder, folderList);
+                adapter = new MainFolderAdapter(this,R.layout.item_main_folder, folderList);
                 rvMainFolderList.setAdapter(adapter);
             }
         }
