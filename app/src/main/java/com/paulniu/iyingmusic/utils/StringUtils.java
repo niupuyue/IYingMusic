@@ -119,4 +119,8 @@ public class StringUtils {
         return lis;
     }
 
+    public static boolean isReal(String string) {
+        return string != null && string.length() > 0 && !"null".equals(string);
+    }
+
 }

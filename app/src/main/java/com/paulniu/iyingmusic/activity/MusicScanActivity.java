@@ -18,10 +18,10 @@ import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.adapter.MusicScanAdapter;
 import com.paulniu.iyingmusic.base.BaseActivity;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
 import com.paulniu.iyingmusic.db.source.FolderInfoSource;
-import com.paulniu.iyingmusic.db.source.MusicInfoSource;
+import com.paulniu.iyingmusic.db.source.SongInfoSource;
 import com.paulniu.iyingmusic.interfaces.IOnMusicScanSelectMusicListener;
-import com.paulniu.iyingmusic.model.MusicInfo;
 import com.paulniu.iyingmusic.model.event.OnFolderMusicListChangeEvent;
 import com.paulniu.iyingmusic.utils.MusicUtils;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
@@ -56,9 +56,9 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
     private TextView tvMusicScanSelectAllConfirm;
     private TextView tvMusicScanSelectFolder;
 
-    private List<MusicInfo> musicInfos = new ArrayList<>();
+    private List<SongInfo> musicInfos = new ArrayList<>();
     // 选择需要被导入的音乐
-    private List<MusicInfo> selectMusicInfos = new ArrayList<>();
+    private List<SongInfo> selectMusicInfos = new ArrayList<>();
     private MusicScanAdapter adapter;
     // 选择被导入的文件夹
     private FolderInfo selectFolderInfo;
@@ -166,6 +166,8 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
                     }
                 });
             }
+        } else {
+            // 扫描本地音乐
         }
     }
 
@@ -201,7 +203,7 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
         // 更改数据库中的数据
         if (null != selectFolderInfo) {
             if (null != selectMusicInfos && selectMusicInfos.size() > 0) {
-                MusicInfoSource.updateMusicInfoFolderId(selectMusicInfos, selectFolderInfo.folderId,selectFolderInfo.folderId == FolderInfoSource.getDefaultFolder().folderId);
+                SongInfoSource.updateSongInfoFolderId(selectMusicInfos, selectFolderInfo.folderId, selectFolderInfo.folderId == FolderInfoSource.getDefaultFolder().folderId);
                 // 导入音乐之后，发送event，通知文件夹列表更新
                 OnFolderMusicListChangeEvent event = new OnFolderMusicListChangeEvent();
                 EventBus.getDefault().post(event);
@@ -293,7 +295,7 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
      * @param musicInfo
      */
     @Override
-    public void onMusicScanSelectMusic(MusicInfo musicInfo) {
+    public void onMusicScanSelectMusic(SongInfo musicInfo) {
         if (null != musicInfo && null != selectMusicInfos) {
             int position = -1;
             for (int i = 0; i < selectMusicInfos.size(); i++) {
@@ -314,7 +316,7 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
      * @param musicInfo
      */
     @Override
-    public void onMusicScanUnselectMusic(MusicInfo musicInfo) {
+    public void onMusicScanUnselectMusic(SongInfo musicInfo) {
         if (null != musicInfo && null != selectMusicInfos && selectMusicInfos.size() > 0) {
             int position = -1;
             for (int i = 0; i < selectMusicInfos.size(); i++) {

@@ -11,10 +11,9 @@ import androidx.annotation.Nullable;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.paulniu.iyingmusic.R;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
 import com.paulniu.iyingmusic.interfaces.IOnMusicScanSelectMusicListener;
-import com.paulniu.iyingmusic.model.MusicInfo;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,18 +23,18 @@ import java.util.List;
  * Desc: 扫描本地存储中的音乐文件适配器
  * Version:
  */
-public class MusicScanAdapter extends BaseQuickAdapter<MusicInfo, MusicScanAdapter.MusicScanViewHolder> {
+public class MusicScanAdapter extends BaseQuickAdapter<SongInfo, MusicScanAdapter.MusicScanViewHolder> {
 
     private IOnMusicScanSelectMusicListener listener;
 
-    public MusicScanAdapter(int layoutResId, @Nullable List<MusicInfo> data, IOnMusicScanSelectMusicListener listener) {
+    public MusicScanAdapter(int layoutResId, @Nullable List<SongInfo> data, IOnMusicScanSelectMusicListener listener) {
         super(layoutResId, data);
         this.listener = listener;
     }
 
     @Override
-    protected void convert(MusicScanViewHolder helper, final MusicInfo item) {
-        helper.tvMusicScanItemName.setText(item.musicName);
+    protected void convert(MusicScanViewHolder helper, final SongInfo item) {
+        helper.tvMusicScanItemName.setText(item.songName);
         helper.tvMusicScanItemPath.setText(item.data);
         helper.tvMusicScanItemArtist.setText(item.artist);
         helper.tvMusicScanItemDuration.setText(String.valueOf(item.duration));

@@ -1,6 +1,6 @@
 package com.paulniu.iyingmusic.interfaces;
 
-import com.paulniu.iyingmusic.model.MusicInfo;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
 
 /**
  * Coder: niupuyue
@@ -11,7 +11,7 @@ import com.paulniu.iyingmusic.model.MusicInfo;
  */
 public interface IOnMusicScanSelectMusicListener {
 
-    void onMusicScanSelectMusic(MusicInfo musicInfo);
+    void onMusicScanSelectMusic(SongInfo musicInfo);
 
-    void onMusicScanUnselectMusic(MusicInfo musicInfo);
+    void onMusicScanUnselectMusic(SongInfo musicInfo);
 }

@@ -7,7 +7,6 @@ import android.text.TextUtils;
 
 import com.paulniu.iyingmusic.db.AppDataBase;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
-import com.paulniu.iyingmusic.service.ServiceManager;
 import com.paulniu.iyingmusic.utils.SPUtils;
 
 import java.io.File;
@@ -21,7 +20,6 @@ import java.io.File;
  */
 public class App extends Application {
 
-    public static ServiceManager mServiceManager = null;
     private static String rootPath = "/iyingmusic";
     public static String lrcPath = "/lrc";
 
@@ -41,7 +39,6 @@ public class App extends Application {
         super.onCreate();
         mApp = this;
         mContext = getApplicationContext();
-        mServiceManager = new ServiceManager(this);
         initPath();
         initDatabase();
     }

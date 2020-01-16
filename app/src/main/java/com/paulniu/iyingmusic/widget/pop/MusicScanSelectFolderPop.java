@@ -23,7 +23,7 @@ import com.paulniu.iyingmusic.adapter.MusicScanSelectFolderAdapter;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.db.entity.FolderInfoWithMusicCount;
 import com.paulniu.iyingmusic.db.source.FolderInfoSource;
-import com.paulniu.iyingmusic.db.source.MusicInfoSource;
+import com.paulniu.iyingmusic.db.source.SongInfoSource;
 import com.paulniu.iyingmusic.interfaces.IOnMusicScanSelectFolderListener;
 import com.paulniu.iyingmusic.utils.BaseUtils;
 
@@ -128,7 +128,7 @@ public class MusicScanSelectFolderPop extends PopupWindow implements View.OnClic
      * 获取本地数据库中文件夹数据
      */
     private void initData() {
-        List<FolderInfoWithMusicCount> folderInfos = MusicInfoSource.getFolderMusicCount();
+        List<FolderInfoWithMusicCount> folderInfos = SongInfoSource.getFolderSongList();
         if (null != folderInfos && folderInfos.size() > 0) {
             rvMusicScanSelectFolder.setLayoutManager(new LinearLayoutManager(mActivity));
             adapter = new MusicScanSelectFolderAdapter(R.layout.item_music_scan_select_folder, folderInfos, this);

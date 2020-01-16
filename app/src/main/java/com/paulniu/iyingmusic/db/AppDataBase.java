@@ -13,9 +13,9 @@ import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.paulniu.iyingmusic.Constant;
 import com.paulniu.iyingmusic.db.converters.MusicConverter;
 import com.paulniu.iyingmusic.db.dao.FolderInfoDao;
-import com.paulniu.iyingmusic.db.dao.MusicInfoDao;
+import com.paulniu.iyingmusic.db.dao.SongInfoDao;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
-import com.paulniu.iyingmusic.model.MusicInfo;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
 
 /**
  * Coder: niupuyue (牛谱乐)
@@ -24,13 +24,13 @@ import com.paulniu.iyingmusic.model.MusicInfo;
  * Desc: 数据库操作
  * Version:
  */
-@Database(entities = {MusicInfo.class, FolderInfo.class}, version = 1)
+@Database(entities = {FolderInfo.class, SongInfo.class}, version = 1)
 @TypeConverters({MusicConverter.class})
 public abstract class AppDataBase extends RoomDatabase {
 
     private static AppDataBase INSTANCE = null;
 
-    public abstract MusicInfoDao getMusicInfoDao();
+    public abstract SongInfoDao getSongInfoDao();
 
     public abstract FolderInfoDao getFolderInfoDao();
 
@@ -38,11 +38,11 @@ public abstract class AppDataBase extends RoomDatabase {
         @Override
         public void migrate(@NonNull SupportSQLiteDatabase database) {
             // 删除本地歌曲表
-            database.execSQL("DROP TABLE IF EXISTS `MusicInfo`");
+            database.execSQL("DROP TABLE IF EXISTS `SongInfo`");
             // 创建本地歌曲表
-            database.execSQL("CREATE TABLE IF NOT EXISTS `MusicInfo` (`_id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `songId` INTEGER NOT NULL, `albumId` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `musicName` TEXT, `artist` TEXT, `data` TEXT,`size` INTEGER, `folder` INTEGER, `musicNameKey` TEXT, `artistKey` TEXT, `favorite` INTEGER NOT NULL)");
+            database.execSQL("CREATE TABLE IF NOT EXISTS `SongInfo` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `songName` TEXT,`folderId` INTEGER NOT NULL,`favorite` INTEGER NOT NULL, `duration` INTEGER NOT NULL, `artist` TEXT, `album` TEXT, `album_id` TEXT, `album_path` TEXT, `year` INTEGER NOT NULL, `data` TEXT, `size` INTEGER NOT NULL, `mime_type` TEXT, `date_modified` INTEGER NOT NULL, `display_name` TEXT, `date_added` INTEGER NOT NULL)");
             // 创建本地歌曲索引
-            database.execSQL("CREATE  INDEX `index_MusicInfo__id_songId_albumId` ON `MusicInfo` (`_id`, `songId`, `albumId`)");
+            database.execSQL("CREATE  INDEX `index_SongInfo_id` ON `SongInfo` (`id`)");
 
             // 删除本地歌曲文件夹表
             database.execSQL("DROP TABLE IF EXISTS `FolderInfo`");

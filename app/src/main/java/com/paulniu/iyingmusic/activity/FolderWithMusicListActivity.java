@@ -14,9 +14,9 @@ import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.adapter.FolderMusicAdapter;
 import com.paulniu.iyingmusic.base.BaseActivity;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
-import com.paulniu.iyingmusic.db.source.MusicInfoSource;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
+import com.paulniu.iyingmusic.db.source.SongInfoSource;
 import com.paulniu.iyingmusic.interfaces.IOnFolderMusicListener;
-import com.paulniu.iyingmusic.model.MusicInfo;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 
 import java.util.ArrayList;
@@ -44,7 +44,7 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
     private LinearLayout llFolderWithMusicListContainer;
     private View viewErrorFolderMusic;
 
-    private List<MusicInfo> musicInfos = new ArrayList<>();
+    private List<SongInfo> songInfos = new ArrayList<>();
     private FolderInfo folderInfo;
     private FolderMusicAdapter adapter;
 
@@ -83,16 +83,16 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
             });
         }
         // 根据folderId查找音乐
-        if (null != musicInfos) {
+        if (null != songInfos) {
             if (null != viewErrorFolderMusic) {
                 viewErrorFolderMusic.setVisibility(View.GONE);
             }
             if (null != llFolderWithMusicListContainer) {
                 llFolderWithMusicListContainer.setVisibility(View.VISIBLE);
             }
-            musicInfos.clear();
-            musicInfos = MusicInfoSource.getMusicInfosByFolderId(folderInfo.folderId);
-            adapter = new FolderMusicAdapter(R.layout.item_folder_music, musicInfos, this);
+            songInfos.clear();
+            songInfos = SongInfoSource.getSongInfosByFolderId(folderInfo.folderId);
+            adapter = new FolderMusicAdapter(R.layout.item_folder_music, songInfos, this);
             LinearLayoutManager manager = new LinearLayoutManager(this);
             rvFolderWithMusicList.setLayoutManager(manager);
             rvFolderWithMusicList.setAdapter(adapter);
@@ -114,27 +114,27 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
     }
 
     @Override
-    public void onFavorite(MusicInfo musicInfo, boolean isFavorite) {
-        if (null != musicInfos && musicInfos.size() > 0 && null != musicInfo) {
+    public void onFavorite(SongInfo musicInfo, boolean isFavorite) {
+        if (null != songInfos && songInfos.size() > 0 && null != musicInfo) {
             int position = -1;
-            for (int i = 0; i < musicInfos.size(); i++) {
-                if (null != musicInfos.get(i) && TextUtils.equals(musicInfo.data, musicInfos.get(i).data) && TextUtils.equals(musicInfo.musicName, musicInfos.get(i).musicName)) {
+            for (int i = 0; i < songInfos.size(); i++) {
+                if (null != songInfos.get(i) && TextUtils.equals(musicInfo.data, songInfos.get(i).data) && TextUtils.equals(musicInfo.songName, songInfos.get(i).songName)) {
                     position = i;
                     break;
                 }
             }
-            musicInfos.get(position).favorite = isFavorite ? 1 : 0;
+            songInfos.get(position).favorite = isFavorite;
             if (null != adapter) {
                 adapter.notifyDataSetChanged();
             }
             // 将修改内容写入数据库
-            MusicInfoSource.updateMusicInfoToFavorite(musicInfo, isFavorite);
+            SongInfoSource.updateSongInfoToFavorite(musicInfo, isFavorite);
             Toast.makeText(this, getString(R.string.FolderWithMusicListActivity_add_myfavorite_success), Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
-    public void onMusicItemClick(MusicInfo musicInfo) {
+    public void onMusicItemClick(SongInfo musicInfo) {
         if (null != musicInfo) {
             // 点击音乐播放
         }

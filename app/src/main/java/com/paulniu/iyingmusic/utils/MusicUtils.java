@@ -2,9 +2,10 @@ package com.paulniu.iyingmusic.utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.Uri;
 import android.provider.MediaStore;
 
-import com.paulniu.iyingmusic.model.MusicInfo;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public class MusicUtils {
      * @param id
      * @return
      */
-    public static int seekCurMusicPositionInList(List<MusicInfo> list, int id) {
+    public static int seekCurMusicPositionInList(List<SongInfo> list, int id) {
         if (id <= -1) {
             return -1;
         }
@@ -34,10 +35,10 @@ public class MusicUtils {
         }
         int result = -1;
         for (int i = 0; i < list.size(); i++) {
-            if (id == list.get(i).songId) {
-                result = i;
-                break;
-            }
+//            if (id == list.get(i).songId) {
+//                result = i;
+//                break;
+//            }
         }
         return result;
     }
@@ -45,34 +46,62 @@ public class MusicUtils {
     /**
      * 查询本地音乐
      */
-    public static List<MusicInfo> getLocalStorageMusics(Context context) {
+    public static List<SongInfo> getLocalStorageMusics(Context context) {
         if (null == context) {
             return null;
         }
-        List<MusicInfo> musicInfos = new ArrayList<>();
+        List<SongInfo> songs = new ArrayList<>();
         Cursor cursor = context.getContentResolver().query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null,
-                null, MediaStore.Audio.AudioColumns.IS_MUSIC);
-        if (null != cursor) {
-            while (cursor.moveToNext()) {
-                MusicInfo musicInfo = new MusicInfo();
-                musicInfo.musicName = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DISPLAY_NAME));
-                musicInfo.artist = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.ARTIST));
-                musicInfo.data = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DATA));
-                musicInfo.duration = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.DURATION));
-                musicInfo.size = (int) cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Audio.Media.SIZE));
-                // TODO 此处拿到的大小是B,需要将其转换成对应的KB，或者MB 并且需要文件以mp3结尾
-                if (musicInfo.size >= SPUtils.getMusicSizeLimit() * 1024  && musicInfo.musicName.endsWith(".mp3")) {
-                    if (musicInfo.musicName.contains("-")) {
-                        String[] str = musicInfo.musicName.split("-");
-                        musicInfo.artist = str[0];
-                        musicInfo.musicName = str[1];
-                    }
-                    musicInfos.add(musicInfo);
-                }
-            }
+                null, null);
+        if (cursor == null) {
+            return songs;
         }
-        return musicInfos;
+        while (cursor.moveToNext()) {
+            SongInfo song = new SongInfo();
+            song.setAlbum_id(cursor.getString(cursor.getColumnIndex(SongInfo.ALBUM_ID)));
+            song.setAlbum_path(getAlbumArtPicPath(context, song.getAlbum_id()));
+            song.setArtist(cursor.getString(cursor.getColumnIndex(SongInfo.ARTIST)));
+            song.setAlbum(cursor.getString(cursor.getColumnIndex(SongInfo.ALBUM)));
+            song.setData(cursor.getString(cursor.getColumnIndex(SongInfo.DATA)));
+            song.setDisplay_name(cursor.getString(cursor.getColumnIndex(SongInfo.DISPLAY_NAME)));
+            song.setMime_type(cursor.getString(cursor.getColumnIndex(SongInfo.MIME_TYPE)));
+            song.setYear(cursor.getLong(cursor.getColumnIndex(SongInfo.YEAR)));
+            song.setDuration(cursor.getInt(cursor.getColumnIndex(SongInfo.DURATION)));
+            song.setSize(cursor.getLong(cursor.getColumnIndex(SongInfo.SIZE)));
+            song.setDate_added(cursor.getLong(cursor.getColumnIndex(SongInfo.DATE_ADDED)));
+            song.setDate_modified(cursor.getLong(cursor.getColumnIndex(SongInfo.DATE_MODIFIED)));
+
+            songs.add(song);
+        }
+        cursor.close();
+        return songs;
     }
 
+    //根据专辑 id 获得专辑图片保存路径
+    private static synchronized String getAlbumArtPicPath(Context context, String albumId) {
+
+        // 小米应用商店检测crash ，错误信息：[31188,0,com.duan.musicoco,13155908,java.lang.IllegalStateException,Unknown URL: content://media/external/audio/albums/null,Parcel.java,1548]
+        if (!StringUtils.isReal(albumId)) {
+            return null;
+        }
+
+        String[] projection = {MediaStore.Audio.Albums.ALBUM_ART};
+        String imagePath = null;
+        Uri uri = Uri.parse("content://media" + MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI.getPath() + "/" + albumId);
+
+        Cursor cur = context.getContentResolver().query(uri, projection, null, null, null);
+        if (cur == null) {
+            return null;
+        }
+
+        if (cur.getCount() > 0 && cur.getColumnCount() > 0) {
+            cur.moveToNext();
+            imagePath = cur.getString(0);
+        }
+        cur.close();
+
+
+        return imagePath;
+    }
 
 }

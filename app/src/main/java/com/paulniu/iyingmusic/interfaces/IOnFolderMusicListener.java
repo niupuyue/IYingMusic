@@ -1,6 +1,6 @@
 package com.paulniu.iyingmusic.interfaces;
 
-import com.paulniu.iyingmusic.model.MusicInfo;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
 
 /**
  * Coder: niupuyue (牛谱乐)
@@ -11,8 +11,8 @@ import com.paulniu.iyingmusic.model.MusicInfo;
  */
 public interface IOnFolderMusicListener {
 
-    void onFavorite(MusicInfo musicInfo, boolean isFavorite);
+    void onFavorite(SongInfo musicInfo, boolean isFavorite);
 
-    void onMusicItemClick(MusicInfo musicInfo);
+    void onMusicItemClick(SongInfo musicInfo);
 
 }

@@ -24,7 +24,7 @@ import com.paulniu.iyingmusic.base.BaseActivity;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.db.entity.FolderInfoWithMusicCount;
 import com.paulniu.iyingmusic.db.source.FolderInfoSource;
-import com.paulniu.iyingmusic.db.source.MusicInfoSource;
+import com.paulniu.iyingmusic.db.source.SongInfoSource;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 import com.paulniu.iyingmusic.widget.dialog.FolderAddDialog;
 
@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         }
 
         // 获取本地文件夹列表
-        folderList = MusicInfoSource.getFolderMusicCount();
+        folderList = SongInfoSource.getFolderSongList();
         if (null != folderList && folderList.size() > 0) {
             if (null != rvMainFolderList) {
                 GridLayoutManager manager = new GridLayoutManager(this, 3);

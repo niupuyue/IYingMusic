@@ -14,8 +14,8 @@ import com.bumptech.glide.Glide;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.paulniu.iyingmusic.R;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
 import com.paulniu.iyingmusic.interfaces.IOnFolderMusicListener;
-import com.paulniu.iyingmusic.model.MusicInfo;
 
 import java.util.List;
 
@@ -26,20 +26,20 @@ import java.util.List;
  * Desc: 文件夹中音乐列表
  * Version:
  */
-public class FolderMusicAdapter extends BaseQuickAdapter<MusicInfo, FolderMusicAdapter.FolderMusicViewHolder> {
+public class FolderMusicAdapter extends BaseQuickAdapter<SongInfo, FolderMusicAdapter.FolderMusicViewHolder> {
 
     private IOnFolderMusicListener listener;
 
-    public FolderMusicAdapter(int layoutResId, @Nullable List<MusicInfo> data, IOnFolderMusicListener listener) {
+    public FolderMusicAdapter(int layoutResId, @Nullable List<SongInfo> data, IOnFolderMusicListener listener) {
         super(layoutResId, data);
         this.listener = listener;
     }
 
     @Override
-    protected void convert(FolderMusicViewHolder helper, final MusicInfo item) {
+    protected void convert(FolderMusicViewHolder helper, final SongInfo item) {
         Context context = helper.llFolderMusicItemContainer.getContext();
 
-        helper.tvFolderMusicItemName.setText(item.musicName);
+        helper.tvFolderMusicItemName.setText(item.songName);
         helper.tvFolderMusicItemArtist.setText(item.artist);
         helper.tvFolderMusicItemPath.setText(item.data);
         helper.tvFolderMusicItemDuration.setText(String.valueOf(item.duration));
@@ -47,7 +47,7 @@ public class FolderMusicAdapter extends BaseQuickAdapter<MusicInfo, FolderMusicA
 
         Glide.with(context).load(context.getResources().getDrawable(R.mipmap.ic_launcher)).into(helper.ivFolderMusicItemAvator);
 
-        helper.cbFolderMusicItemFavorite.setChecked(item.favorite == 0 ? false : true);
+        helper.cbFolderMusicItemFavorite.setChecked(item.favorite);
         helper.cbFolderMusicItemFavorite.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean favorite) {
