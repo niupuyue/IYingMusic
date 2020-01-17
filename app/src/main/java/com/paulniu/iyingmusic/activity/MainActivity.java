@@ -29,6 +29,7 @@ import com.paulniu.iyingmusic.service.PlayServiceConnection;
 import com.paulniu.iyingmusic.service.SongPlayServiceManager;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 import com.paulniu.iyingmusic.widget.dialog.FolderAddDialog;
+import com.paulniu.iyingmusic.widget.pop.CurrSongListPop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -218,6 +219,22 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
         startActivity(intent);
     }
 
+    private void showSongListPop() {
+        CurrSongListPop pop = new CurrSongListPop(this, new CurrSongListPop.OnCurrSongListListener() {
+            // TODO 可以考虑是否放在pop中操作
+            @Override
+            public void clearAll() {
+                // 清空本地播放列表
+            }
+
+            @Override
+            public void onChangePlayMode(int mode) {
+                // 改变播放状态
+            }
+        });
+        pop.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
     @Override
     public void onBackPressed() {
         // 如果侧滑页面处于展开状态，则关闭侧滑页面
@@ -271,6 +288,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
             case R.id.tvMainCurrMusicPlayList:
                 // 显示当前音乐播放列表
+                showSongListPop();
                 break;
         }
     }

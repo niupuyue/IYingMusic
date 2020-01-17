@@ -164,22 +164,8 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
         }
     }
 
-    //动态获取内存存储权限
-    public static void verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
-        int permission = ActivityCompat.checkSelfPermission(activity,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        if (permission != PackageManager.PERMISSION_GRANTED) {
-            // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                    1);
-        }
-    }
-
     @Override
     public void onMusicItemClick(SongInfo musicInfo) {
-        verifyStoragePermissions(this);
         if (null != musicInfo && null != playControl) {
             try {
                 List<Song> curList = playControl.getPlayList();

@@ -21,6 +21,8 @@ public class SPUtils {
 
     private static final String KEY_INT_MUSICSIZE = "musicSize";
 
+    private static final String KEY_INT_PLAYMODE = "playmodel";
+
     private static SharedPreferences sharedPreferences = null;
 
     private static SharedPreferences getSharedPreferences() {
@@ -81,6 +83,22 @@ public class SPUtils {
      */
     public static int getMusicSizeLimit() {
         return getSharedPreferences().getInt(KEY_INT_MUSICSIZE, 2);
+    }
+
+    /**
+     * 获取播放模式
+     */
+    public static int getPlayMode() {
+        return getSharedPreferences().getInt(KEY_INT_PLAYMODE, 0);
+    }
+
+    /**
+     * 设置播放模式
+     */
+    public static void setPlayMode(int mode) {
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putInt(KEY_INT_PLAYMODE, mode);
+        editor.apply();
     }
 
 }

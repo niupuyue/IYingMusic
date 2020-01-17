@@ -34,4 +34,12 @@
     <string name="MusicScanSelectFolderPop_input_folder_name_empty">请输入新建文件夹名称</string>
     <string name="MusicScanSelectFolderPop_new_folder_fail">新建文件夹失败！</string>
     <string name="MusicScanSelectFolderPop_new_folder_success">歌曲导入新建文件夹成功！</string>
+
+    <!--  当前歌曲播放列表弹窗 CurSongListPop  -->
+    <string name="CurSongListPop_title">播放列表</string>
+    <string name="CurSongListPop_subTitle">(%s)</string>
+    <string name="CurSongListPop_playmode_list">列表循环</string>
+    <string name="CurSongListPop_playmode_random">随机播放</string>
+    <string name="CurSongListPop_playmode_single">单曲循环</string>
+    <string name="CurSongListPop_cleal_all">清空</string>
 </resources>

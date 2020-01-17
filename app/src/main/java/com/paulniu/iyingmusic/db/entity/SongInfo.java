@@ -114,13 +114,23 @@ public class SongInfo implements MediaStore.Audio.AudioColumns {
     @ColumnInfo(name = "date_added")
     public long date_added;
 
+    /**
+     * 复选框按钮是否可见
+     */
     @Ignore
     public boolean isShowChecked;
 
+    /**
+     * 是否被选中
+     */
     @Ignore
     public boolean isChecked;
 
-
+    /**
+     * 是否是正在播放的状态
+     */
+    @Ignore
+    public boolean isPlaying = false;
 
     public int getId() {
         return id;
@@ -264,5 +274,13 @@ public class SongInfo implements MediaStore.Audio.AudioColumns {
 
     public void setChecked(boolean checked) {
         isChecked = checked;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public void setPlaying(boolean playing) {
+        isPlaying = playing;
     }
 }
