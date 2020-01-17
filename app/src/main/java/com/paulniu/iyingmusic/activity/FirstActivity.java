@@ -105,16 +105,15 @@ public class FirstActivity extends BaseActivity implements View.OnClickListener 
         if (null != rxPermissions) {
             if (!rxPermissions.isGranted(Manifest.permission.WRITE_EXTERNAL_STORAGE) ||
                     !rxPermissions.isGranted(Manifest.permission.READ_EXTERNAL_STORAGE) ||
-                    !rxPermissions.isGranted(Manifest.permission.INTERNET) ||
-                    !rxPermissions.isGranted(Manifest.permission.ACCESS_FINE_LOCATION)) {
+                    !rxPermissions.isGranted(Manifest.permission.RECORD_AUDIO)) {
                 final GrantPermissionPop pop = new GrantPermissionPop(this, new GrantPermissionPop.OnGrantPermissionListener() {
                     @SuppressLint("CheckResult")
                     @Override
                     public void onConfirm() {
-                        rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                        rxPermissions.request(
                                 Manifest.permission.READ_EXTERNAL_STORAGE,
-                                Manifest.permission.INTERNET,
-                                Manifest.permission.ACCESS_FINE_LOCATION)
+                                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                                Manifest.permission.RECORD_AUDIO)
                                 .subscribe(new Consumer<Boolean>() {
                                     @Override
                                     public void accept(Boolean grant) {
@@ -139,8 +138,8 @@ public class FirstActivity extends BaseActivity implements View.OnClickListener 
                     public void run() {
                         pop.showAtLocation(getWindow().getDecorView(), Gravity.CENTER, 0, 0);
                     }
-                },500);
-            }else {
+                }, 500);
+            } else {
                 startCountDown();
             }
         }

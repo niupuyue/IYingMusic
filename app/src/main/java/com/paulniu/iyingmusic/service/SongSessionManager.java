@@ -105,28 +105,28 @@ public class SongSessionManager {
     }
 
     /**
-     * 更新正在播放的音乐信息，切换歌曲时调用
+     * 更新正在播放的音乐信息，切换歌曲时调用 TODO
      */
     public void updateMetaData(String path) {
-        if (!StringUtils.isReal(path)) {
-            mMediaSession.setMetadata(null);
-            return;
-        }
-
-        SongInfo info = SongUtils.getSongInfoBySongPath(path);
-        MediaMetadataCompat.Builder metaData = new MediaMetadataCompat.Builder()
-//                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, info.getTitle())
-                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, info.getArtist())
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, info.getAlbum())
-                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, info.getArtist())
-                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, info.getDuration())
-                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, getCoverBitmap(info));
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            metaData.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, getCount());
-        }
-
-        mMediaSession.setMetadata(metaData.build());
+//        if (!StringUtils.isReal(path)) {
+//            mMediaSession.setMetadata(null);
+//            return;
+//        }
+//
+//        SongInfo info = SongUtils.getSongInfoBySongPath(path);
+//        MediaMetadataCompat.Builder metaData = new MediaMetadataCompat.Builder()
+////                .putString(MediaMetadataCompat.METADATA_KEY_TITLE, info.getTitle())
+//                .putString(MediaMetadataCompat.METADATA_KEY_ARTIST, info.getArtist())
+//                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM, info.getAlbum())
+//                .putString(MediaMetadataCompat.METADATA_KEY_ALBUM_ARTIST, info.getArtist())
+//                .putLong(MediaMetadataCompat.METADATA_KEY_DURATION, info.getDuration())
+//                .putBitmap(MediaMetadataCompat.METADATA_KEY_ALBUM_ART, getCoverBitmap(info));
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            metaData.putLong(MediaMetadataCompat.METADATA_KEY_NUM_TRACKS, getCount());
+//        }
+//
+//        mMediaSession.setMetadata(metaData.build());
     }
 
     /**

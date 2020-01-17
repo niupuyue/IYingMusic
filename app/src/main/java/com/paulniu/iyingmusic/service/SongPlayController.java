@@ -2,6 +2,7 @@ package com.paulniu.iyingmusic.service;
 
 import android.content.Context;
 import android.media.MediaPlayer;
+import android.text.TextUtils;
 
 import androidx.annotation.NonNull;
 
@@ -41,7 +42,7 @@ public class SongPlayController {
     /**
      * 当前正在播放的音乐的下标
      */
-    private int mCurrentSong = 0;
+    private int mCurrentSong = -1;
     /**
      * 当前音乐的播放状态
      */
@@ -122,10 +123,10 @@ public class SongPlayController {
     private int mPlayMode = MODE_DEFAULT;
 
     private SongPlayController(Context context, SongFocusManager focusManager,
-                           SongSessionManager sessionManager,
-                           NotifyStatusChanged sl,
-                           NotifySongChanged sc,
-                           NotifyPlayListChanged pl) {
+                               SongSessionManager sessionManager,
+                               NotifyStatusChanged sl,
+                               NotifySongChanged sc,
+                               NotifyPlayListChanged pl) {
         this.context = context;
         this.focusManager = focusManager;
         this.sessionManager = sessionManager;
@@ -147,12 +148,13 @@ public class SongPlayController {
 
     /**
      * 通过静态方法暴露出创建音乐播放操作类对象
-     * @param context 上下文对象
-     * @param focusManager 音乐播放焦点工具类
+     *
+     * @param context        上下文对象
+     * @param focusManager   音乐播放焦点工具类
      * @param sessionManager 音乐播放缓存工具类
-     * @param sl 通知栏状态改变回调
-     * @param sc 通知栏歌曲改变回调
-     * @param pl 通知栏播放列表改变回调
+     * @param sl             通知栏状态改变回调
+     * @param sc             通知栏歌曲改变回调
+     * @param pl             通知栏播放列表改变回调
      * @return 音乐播放操作工具类对象
      */
     public static SongPlayController getMediaController(Context context, SongFocusManager focusManager, SongSessionManager sessionManager, NotifyStatusChanged sl, NotifySongChanged sc, NotifyPlayListChanged pl) {
@@ -199,7 +201,8 @@ public class SongPlayController {
     }
 
     /**
-     * 设置当前正在播放的音乐，并且把歌曲信息更新到底部sheet
+     * 设置当前正在播放的音乐，并且把歌曲信息更新到底部sheet TODO
+     *
      * @param sheetID
      * @param current
      * @return

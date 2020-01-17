@@ -1,16 +1,23 @@
 package com.paulniu.iyingmusic.activity;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.pm.PackageManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.IBinder;
 import android.os.RemoteException;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,6 +38,8 @@ import com.paulniu.iyingmusic.service.SongPlayServiceManager;
 import com.paulniu.iyingmusic.utils.SongUtils;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -155,13 +164,27 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
         }
     }
 
+    //动态获取内存存储权限
+    public static void verifyStoragePermissions(Activity activity) {
+        // Check if we have write permission
+        int permission = ActivityCompat.checkSelfPermission(activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE);
+
+        if (permission != PackageManager.PERMISSION_GRANTED) {
+            // We don't have permission so prompt the user
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1);
+        }
+    }
+
     @Override
     public void onMusicItemClick(SongInfo musicInfo) {
+        verifyStoragePermissions(this);
         if (null != musicInfo && null != playControl) {
             try {
                 List<Song> curList = playControl.getPlayList();
-                if (null == curList || curList.size() <=0){
-                    playControl.setPlayList(SongUtils.formatSongInfoToSong(songInfos),-1,folderInfo.folderId);
+                if (null == curList || curList.size() <= 0) {
+                    playControl.setPlayList(SongUtils.formatSongInfoToSong(songInfos), -1, folderInfo.folderId);
                 }
             } catch (RemoteException e) {
                 e.printStackTrace();
@@ -169,32 +192,32 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
             // 点击音乐播放
             try {
                 int currIndex = playControl.currentSongIndex();
-//                if (currIndex >=0 && currIndex<songInfos.size() && TextUtils.equals(musicInfo.data,songInfos.get(currIndex).data) && musicInfo.id == songInfos.get(currIndex).id){
-//                    if (null != playControl.currentSong()){
-//                        String curPath = playControl.currentSong().path;
-//                        if (!TextUtils.isEmpty(curPath) && TextUtils.equals(musicInfo.data,curPath) && playControl.status() != SongPlayController.STATUS_PLAYING){
-//                            playControl.resume();
-//                            return;
-//                        }
-//                    }
-//                }
+                if (currIndex >= 0 && currIndex < songInfos.size() && TextUtils.equals(musicInfo.data, songInfos.get(currIndex).data) && musicInfo.id == songInfos.get(currIndex).id) {
+                    if (null != playControl.currentSong()) {
+                        String curPath = playControl.currentSong().path;
+                        if (!TextUtils.isEmpty(curPath) && TextUtils.equals(musicInfo.data, curPath) && playControl.status() != SongPlayController.STATUS_PLAYING) {
+                            playControl.resume();
+                            return;
+                        }
+                    }
+                }
                 playControl.play(new Song(musicInfo.data));
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
-
         }
     }
 
     /**
      * 初始化广播
      */
-    private void initBroadcastReceivers(){
+    private void initBroadcastReceivers() {
 
     }
 
     /**
      * 播放服务连接成功
+     *
      * @param name
      * @param service
      */
@@ -208,17 +231,19 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
 
     /**
      * 播放服务连接失败
+     *
      * @param name
      */
     @Override
     public void disConnected(ComponentName name) {
         sServiceConnection = null;
-        sServiceConnection = new PlayServiceConnection(this,this,this);
+        sServiceConnection = new PlayServiceConnection(this, this, this);
         playServiceManager.bindService(sServiceConnection);
     }
 
     /**
      * 切歌
+     *
      * @param song
      * @param index
      * @param isNext
@@ -230,6 +255,7 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
 
     /**
      * 开始播放
+     *
      * @param song
      * @param index
      * @param status
@@ -241,6 +267,7 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
 
     /**
      * 停止播放
+     *
      * @param song
      * @param index
      * @param status
@@ -252,6 +279,7 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
 
     /**
      * 播放列表改变
+     *
      * @param current
      * @param index
      * @param id
@@ -263,6 +291,7 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
 
     /**
      * 数据更新成功
+     *
      * @param mControl
      */
     @Override

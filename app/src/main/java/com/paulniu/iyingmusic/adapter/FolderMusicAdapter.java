@@ -44,7 +44,7 @@ public class FolderMusicAdapter extends BaseQuickAdapter<SongInfo, FolderMusicAd
         helper.tvFolderMusicItemArtist.setText(item.artist);
         helper.tvFolderMusicItemPath.setText(item.data);
         helper.tvFolderMusicItemDuration.setText(StringUtils.getGenTimeMS(item.duration));
-        helper.tvFolderMusicItemSize.setText(String.valueOf(item.size >> 10 >> 10) + " MB");
+        helper.tvFolderMusicItemSize.setText((item.size >> 10 >> 10 )+ " MB");
 
         Glide.with(context).load(context.getResources().getDrawable(R.mipmap.ic_launcher)).into(helper.ivFolderMusicItemAvator);
 

@@ -22,7 +22,7 @@ public abstract class OnPlayStatusChangedListener extends IOnPlayStatusChangedLi
      * 2.继续播放，开始播放时回调
      * @param which 当前开始播放的曲目
      * @param index 播放列表下标
-     * @param status 播放状态，均为{@link com.paulniu.iyingmusic.service.PlayController#STATUS_START}
+     * @param status 播放状态，均为{@link com.paulniu.iyingmusic.service.SongPlayController#STATUS_START}
      */
     @Override
     public abstract void playStart(Song which, int index, int status);
@@ -32,7 +32,7 @@ public abstract class OnPlayStatusChangedListener extends IOnPlayStatusChangedLi
      * 2.暂停，停止播放时回调
      * @param which 当前播放曲目
      * @param index 播放下标
-     * @param status 播放状态，均为{@link com.paulniu.iyingmusic.service.PlayController#STATUS_STOP}
+     * @param status 播放状态，均为{@link com.paulniu.iyingmusic.service.SongPlayController#STATUS_STOP}
      */
     @Override
     public abstract void playStop(Song which, int index, int status);

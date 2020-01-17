@@ -99,6 +99,8 @@ public abstract class BaseActivity extends FragmentActivity {
 
     protected void startSongService(){
         SongPlayServiceManager.startPlayService(this);
+        // 执行耗时操作，更新播放列表 TODO
+
     }
 
     @Override

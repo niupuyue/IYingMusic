@@ -51,17 +51,17 @@ public class SongUtils {
     /**
      * 根据传递过来的路径查找到对应的数据库歌曲
      */
-    public static SongInfo getSongInfoBySongPath(String path){
-        if (TextUtils.isEmpty(path)){
+    public static SongInfo getSongInfoBySongPath(String path) {
+        if (TextUtils.isEmpty(path)) {
             return null;
         }
         SongInfo tmpSong = null;
-        if (null == songInfos || songInfos.size() <= 0){
+        if (null == songInfos || songInfos.size() <= 0) {
             getLocalStorageMusics(App.getContext());
         }
-        for (SongInfo songInfo:songInfos){
-            if (null != songInfo){
-                if (TextUtils.equals(songInfo.data,path)){
+        for (SongInfo songInfo : songInfos) {
+            if (null != songInfo) {
+                if (TextUtils.equals(songInfo.data, path)) {
                     tmpSong = songInfo;
                     break;
                 }
@@ -97,8 +97,10 @@ public class SongUtils {
             song.setSize(cursor.getLong(cursor.getColumnIndex(SongInfo.SIZE)));
             song.setDate_added(cursor.getLong(cursor.getColumnIndex(SongInfo.DATE_ADDED)));
             song.setDate_modified(cursor.getLong(cursor.getColumnIndex(SongInfo.DATE_MODIFIED)));
-
-            songs.add(song);
+            // 只有音乐大于2M/自定义大小时才会加入到列表中
+            if ((song.size >> 10 >> 10) >= SPUtils.getMusicSizeLimit()) {
+                songs.add(song);
+            }
         }
         cursor.close();
         songInfos = songs;
@@ -135,12 +137,12 @@ public class SongUtils {
     /**
      * SongInfo对象转换成Song对象
      */
-    public static List<Song> formatSongInfoToSong(List<SongInfo> songInfos){
-        if (null == songInfos || songInfos.size() <= 0){
+    public static List<Song> formatSongInfoToSong(List<SongInfo> songInfos) {
+        if (null == songInfos || songInfos.size() <= 0) {
             return null;
         }
         List<Song> songs = new ArrayList<>();
-        for (SongInfo songInfo:songInfos){
+        for (SongInfo songInfo : songInfos) {
             Song song = new Song(songInfo.data);
             songs.add(song);
         }

@@ -9,5 +9,5 @@ import android.app.Service;
  * Desc: 基类service(后面可能需要在)
  * Version:
  */
-public abstract class BaseService extends Service {
+public abstract class BaseService extends Service  {
 }
