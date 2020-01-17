@@ -5,11 +5,13 @@ import androidx.drawerlayout.widget.DrawerLayout.SimpleDrawerListener;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -20,11 +22,16 @@ import android.widget.Toast;
 
 import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.adapter.MainFolderAdapter;
+import com.paulniu.iyingmusic.aidl.IPlayControl;
+import com.paulniu.iyingmusic.aidl.Song;
 import com.paulniu.iyingmusic.base.BaseActivity;
 import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.db.entity.FolderInfoWithMusicCount;
+import com.paulniu.iyingmusic.db.entity.SongInfo;
 import com.paulniu.iyingmusic.db.source.FolderInfoSource;
 import com.paulniu.iyingmusic.db.source.SongInfoSource;
+import com.paulniu.iyingmusic.interfaces.OnServiceConnect;
+import com.paulniu.iyingmusic.interfaces.PlayServiceCallback;
 import com.paulniu.iyingmusic.service.PlayServiceConnection;
 import com.paulniu.iyingmusic.service.SongPlayServiceManager;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
@@ -34,7 +41,7 @@ import com.paulniu.iyingmusic.widget.pop.CurrSongListPop;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends BaseActivity implements View.OnClickListener {
+public class MainActivity extends BaseActivity implements View.OnClickListener, OnServiceConnect, PlayServiceCallback {
 
     public static Intent getIntent(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -68,6 +75,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private PlayServiceConnection sServiceConnection;
     private SongPlayServiceManager playServiceManager;
+    private IPlayControl playControl;
+
+    private SongInfo currSongInfo;
+    private List<SongInfo> currSongInfos = new ArrayList<>();
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -207,6 +218,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         }
 
+        // 初始化歌曲播放服务管理对象
+        playServiceManager = new SongPlayServiceManager(this);
+        // 初始化音乐播放连接
+        sServiceConnection = new PlayServiceConnection(this, this, this);
+        // 绑定成功后回调 onConnected
+        playServiceManager.bindService(sServiceConnection);
     }
 
     private void jumpToMusicScan() {
@@ -233,6 +250,65 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
             }
         });
         pop.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+    }
+
+    /**
+     * 初始化广播
+     */
+    private void initBroadcastReceivers() {
+
+    }
+
+    /**
+     * 连接成功
+     *
+     * @param name
+     * @param service
+     */
+    @Override
+    public void onConnected(ComponentName name, IBinder service) {
+        // 注册广播
+        initBroadcastReceivers();
+
+        playControl = IPlayControl.Stub.asInterface(service);
+
+        // 获取当前歌曲播放列表 TODO
+//        currSongInfos = playControl.getPlayList();
+    }
+
+    /**
+     * 断开连接
+     *
+     * @param name
+     */
+    @Override
+    public void disConnected(ComponentName name) {
+
+    }
+
+    @Override
+    public void songChanged(Song song, int index, boolean isNext) {
+
+    }
+
+    @Override
+    public void startPlay(Song song, int index, int status) {
+
+    }
+
+    @Override
+    public void stopPlay(Song song, int index, int status) {
+
+    }
+
+    @Override
+    public void onPlayListChange(Song current, int index, int id) {
+
+    }
+
+    @Override
+    public void dataIsReady(IPlayControl mControl) {
+
     }
 
     @Override
@@ -292,4 +368,5 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 break;
         }
     }
+
 }
