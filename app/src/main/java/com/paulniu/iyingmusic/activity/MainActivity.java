@@ -25,6 +25,8 @@ import com.paulniu.iyingmusic.db.entity.FolderInfo;
 import com.paulniu.iyingmusic.db.entity.FolderInfoWithMusicCount;
 import com.paulniu.iyingmusic.db.source.FolderInfoSource;
 import com.paulniu.iyingmusic.db.source.SongInfoSource;
+import com.paulniu.iyingmusic.service.PlayServiceConnection;
+import com.paulniu.iyingmusic.service.SongPlayServiceManager;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 import com.paulniu.iyingmusic.widget.dialog.FolderAddDialog;
 
@@ -62,6 +64,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
 
     private List<FolderInfoWithMusicCount> folderList = new ArrayList<>();
     private MainFolderAdapter adapter;
+
+    private PlayServiceConnection sServiceConnection;
+    private SongPlayServiceManager playServiceManager;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -200,6 +205,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener {
                 rvMainFolderList.setAdapter(adapter);
             }
         }
+
     }
 
     private void jumpToMusicScan() {

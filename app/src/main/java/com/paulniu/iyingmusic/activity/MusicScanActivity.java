@@ -23,7 +23,7 @@ import com.paulniu.iyingmusic.db.source.FolderInfoSource;
 import com.paulniu.iyingmusic.db.source.SongInfoSource;
 import com.paulniu.iyingmusic.interfaces.IOnMusicScanSelectMusicListener;
 import com.paulniu.iyingmusic.model.event.OnFolderMusicListChangeEvent;
-import com.paulniu.iyingmusic.utils.MusicUtils;
+import com.paulniu.iyingmusic.utils.SongUtils;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 import com.paulniu.iyingmusic.widget.pop.MusicScanSelectEmptyFolderPop;
 import com.paulniu.iyingmusic.widget.pop.MusicScanSelectFolderPop;
@@ -125,7 +125,7 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
         if (null != musicInfos) {
             musicInfos.clear();
         }
-        musicInfos = MusicUtils.getLocalStorageMusics(this);
+        musicInfos = SongUtils.getLocalStorageMusics(this);
         if (null != musicInfos && musicInfos.size() > 0) {
             // 本地音乐数量大于0
             if (null != rlMusicScanStart) {

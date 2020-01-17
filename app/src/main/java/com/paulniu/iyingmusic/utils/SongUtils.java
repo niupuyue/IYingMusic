@@ -4,7 +4,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 
+import com.paulniu.iyingmusic.App;
 import com.paulniu.iyingmusic.db.entity.SongInfo;
 
 import java.util.ArrayList;
@@ -17,7 +19,9 @@ import java.util.List;
  * Desc: 音乐播放公共方法
  * Version:
  */
-public class MusicUtils {
+public class SongUtils {
+
+    private static List<SongInfo> songInfos = new ArrayList<>();
 
     /**
      * 查找当前音乐在列表中的位置(下标)
@@ -41,6 +45,28 @@ public class MusicUtils {
 //            }
         }
         return result;
+    }
+
+    /**
+     * 根据传递过来的路径查找到对应的数据库歌曲
+     */
+    public static SongInfo getSongInfoBySongPath(String path){
+        if (TextUtils.isEmpty(path)){
+            return null;
+        }
+        SongInfo tmpSong = null;
+        if (null == songInfos || songInfos.size() <= 0){
+            getLocalStorageMusics(App.getContext());
+        }
+        for (SongInfo songInfo:songInfos){
+            if (null != songInfo){
+                if (TextUtils.equals(songInfo.data,path)){
+                    tmpSong = songInfo;
+                    break;
+                }
+            }
+        }
+        return tmpSong;
     }
 
     /**
@@ -74,6 +100,7 @@ public class MusicUtils {
             songs.add(song);
         }
         cursor.close();
+        songInfos = songs;
         return songs;
     }
 

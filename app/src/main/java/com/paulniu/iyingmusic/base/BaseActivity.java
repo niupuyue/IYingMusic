@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.paulniu.iyingmusic.service.SongPlayServiceManager;
 import com.paulniu.iyingmusic.utils.ImmersionBarUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -94,6 +95,10 @@ public abstract class BaseActivity extends FragmentActivity {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    protected void startSongService(){
+        SongPlayServiceManager.startPlayService(this);
     }
 
     @Override

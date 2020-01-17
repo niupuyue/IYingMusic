@@ -167,6 +167,8 @@ public class FirstActivity extends BaseActivity implements View.OnClickListener 
                 timer.schedule(task, 0, 1000);
             }
         }
+        // 开启音乐播放服务
+        startSongService();
     }
 
     private void reGrantPermission() {
