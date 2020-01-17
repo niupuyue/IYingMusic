@@ -19,13 +19,16 @@ import com.paulniu.iyingmusic.utils.StringUtils;
  * Coder: niupuyue
  * Date: 2020/1/17
  * Time: 10:41
- * Desc:
+ * Desc: 音乐缓存管理类
  * Version:
  */
 public class SongSessionManager {
 
-    private static final String TAG = "MediaSessionManager";
+    private static final String TAG = "SongSessionManager";
 
+    /**
+     * 设置音乐缓存管理的动作对象
+     */
     private static final long MEDIA_SESSION_ACTIONS =
             PlaybackStateCompat.ACTION_PLAY
                     | PlaybackStateCompat.ACTION_PAUSE
@@ -39,6 +42,11 @@ public class SongSessionManager {
     private final Context context;
     private MediaSessionCompat mMediaSession;
 
+    /**
+     * 构造方法 初始化IPlayControl对象(这个对象是多进程间通信的桥梁)
+     * @param context
+     * @param control
+     */
     public SongSessionManager(Context context, IPlayControl control) {
         this.context = context;
         this.control = control;
@@ -70,6 +78,10 @@ public class SongSessionManager {
                         .build());
     }
 
+    /**
+     * 获取当前播放的百分比
+     * @return 百分比
+     */
     private long getCurrentPosition() {
         try {
             return control.getProgress();
@@ -79,6 +91,10 @@ public class SongSessionManager {
         }
     }
 
+    /**
+     * 音乐是否正在播放状态
+     * @return
+     */
     private boolean isPlaying() {
         try {
             return control.status() == SongPlayController.STATUS_PLAYING;
@@ -113,6 +129,10 @@ public class SongSessionManager {
         mMediaSession.setMetadata(metaData.build());
     }
 
+    /**
+     * 当前播放列表数量
+     * @return
+     */
     private long getCount() {
         try {
             return control.getPlayList().size();

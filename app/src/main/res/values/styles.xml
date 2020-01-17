@@ -6,6 +6,12 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="AppTheme.First" parent="AppTheme">
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <item name="android:windowBackground">@color/colorPrimary</item>
     </style>
 
     <!-- 透明渐变短动画 -->

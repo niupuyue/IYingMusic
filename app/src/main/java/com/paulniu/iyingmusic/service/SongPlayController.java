@@ -17,24 +17,47 @@ import java.util.Random;
  * Coder: niupuyue
  * Date: 2020/1/17
  * Time: 10:56
- * Desc:
+ * Desc: 音乐播放控制器
  * Version:
  */
 public class SongPlayController {
-
-    private static final String TAG = "PlayController";
-
+    /**
+     * 上下文对象
+     */
     private final Context context;
+    /**
+     * 当前类对象
+     */
     private static volatile SongPlayController MANAGER = null;
+    /**
+     * 音乐播放时需要获取手机的焦点
+     */
     private final SongFocusManager focusManager;
+    /**
+     * 手机添加
+     */
     private final SongSessionManager sessionManager;
 
+    /**
+     * 当前正在播放的音乐的下标
+     */
     private int mCurrentSong = 0;
+    /**
+     * 当前音乐的播放状态
+     */
     private int mPlayState;
-
+    /**
+     * 当前的音乐播放列表
+     */
     private List<Song> mPlayList = Collections.synchronizedList(new ArrayList<Song>());
+    /**
+     * 多媒体播放对象
+     */
     private final MediaPlayer mPlayer;
 
+    /**
+     * 是否可以点击下一首
+     */
     private boolean isNext = true;
     private int mPlayListId;
 
@@ -112,6 +135,7 @@ public class SongPlayController {
 
         mPlayState = STATUS_STOP;
         mPlayer = new MediaPlayer();
+        // 添加音乐播放完成自定播放下一首
         mPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -121,6 +145,16 @@ public class SongPlayController {
 
     }
 
+    /**
+     * 通过静态方法暴露出创建音乐播放操作类对象
+     * @param context 上下文对象
+     * @param focusManager 音乐播放焦点工具类
+     * @param sessionManager 音乐播放缓存工具类
+     * @param sl 通知栏状态改变回调
+     * @param sc 通知栏歌曲改变回调
+     * @param pl 通知栏播放列表改变回调
+     * @return 音乐播放操作工具类对象
+     */
     public static SongPlayController getMediaController(Context context, SongFocusManager focusManager, SongSessionManager sessionManager, NotifyStatusChanged sl, NotifySongChanged sc, NotifyPlayListChanged pl) {
         if (MANAGER == null) {
             synchronized (SongPlayController.class) {

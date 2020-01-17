@@ -156,15 +156,18 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
 
     @Override
     public void onMusicItemClick(SongInfo musicInfo) {
-        if (null != musicInfo) {
+        if (null != musicInfo && null != playControl) {
             // 点击音乐播放
             try {
                 int currIndex = playControl.currentSongIndex();
                 if (currIndex >=0 && currIndex<songInfos.size() && TextUtils.equals(musicInfo.data,songInfos.get(currIndex).data) && musicInfo.id == songInfos.get(currIndex).id){
-                    // 暂停播放
-                    if (playControl.status() != SongPlayController.STATUS_PLAYING)
-                        playControl.resume();
-                    return;
+                    if (null != playControl.currentSong()){
+                        String curPath = playControl.currentSong().path;
+                        if (!TextUtils.isEmpty(curPath) && TextUtils.equals(musicInfo.data,curPath) && playControl.status() != SongPlayController.STATUS_PLAYING){
+                            playControl.resume();
+                            return;
+                        }
+                    }
                 }
                 playControl.play(new Song(musicInfo.data));
             } catch (RemoteException e) {
