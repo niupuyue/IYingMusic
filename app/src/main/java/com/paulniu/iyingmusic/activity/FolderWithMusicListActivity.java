@@ -28,6 +28,7 @@ import com.paulniu.iyingmusic.interfaces.PlayServiceCallback;
 import com.paulniu.iyingmusic.service.PlayServiceConnection;
 import com.paulniu.iyingmusic.service.SongPlayController;
 import com.paulniu.iyingmusic.service.SongPlayServiceManager;
+import com.paulniu.iyingmusic.utils.SongUtils;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 
 import java.util.ArrayList;
@@ -157,18 +158,26 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
     @Override
     public void onMusicItemClick(SongInfo musicInfo) {
         if (null != musicInfo && null != playControl) {
+            try {
+                List<Song> curList = playControl.getPlayList();
+                if (null == curList || curList.size() <=0){
+                    playControl.setPlayList(SongUtils.formatSongInfoToSong(songInfos),-1,folderInfo.folderId);
+                }
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
             // 点击音乐播放
             try {
                 int currIndex = playControl.currentSongIndex();
-                if (currIndex >=0 && currIndex<songInfos.size() && TextUtils.equals(musicInfo.data,songInfos.get(currIndex).data) && musicInfo.id == songInfos.get(currIndex).id){
-                    if (null != playControl.currentSong()){
-                        String curPath = playControl.currentSong().path;
-                        if (!TextUtils.isEmpty(curPath) && TextUtils.equals(musicInfo.data,curPath) && playControl.status() != SongPlayController.STATUS_PLAYING){
-                            playControl.resume();
-                            return;
-                        }
-                    }
-                }
+//                if (currIndex >=0 && currIndex<songInfos.size() && TextUtils.equals(musicInfo.data,songInfos.get(currIndex).data) && musicInfo.id == songInfos.get(currIndex).id){
+//                    if (null != playControl.currentSong()){
+//                        String curPath = playControl.currentSong().path;
+//                        if (!TextUtils.isEmpty(curPath) && TextUtils.equals(musicInfo.data,curPath) && playControl.status() != SongPlayController.STATUS_PLAYING){
+//                            playControl.resume();
+//                            return;
+//                        }
+//                    }
+//                }
                 playControl.play(new Song(musicInfo.data));
             } catch (RemoteException e) {
                 e.printStackTrace();

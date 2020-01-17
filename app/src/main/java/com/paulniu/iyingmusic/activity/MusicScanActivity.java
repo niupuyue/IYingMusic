@@ -7,6 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,7 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
     private CheckBox cbMusciScanSelectAll;
     private TextView tvMusicScanSelectAllConfirm;
     private TextView tvMusicScanSelectFolder;
+    private RelativeLayout rlMusicScanResultEmpty;
 
     private List<SongInfo> musicInfos = new ArrayList<>();
     // 选择需要被导入的音乐
@@ -87,6 +89,8 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
         cbMusciScanSelectAll = findViewById(R.id.cbMusciScanSelectAll);
         tvMusicScanSelectAllConfirm = findViewById(R.id.tvMusicScanSelectAllConfirm);
         tvMusicScanSelectFolder = findViewById(R.id.tvMusicScanSelectFolder);
+
+        rlMusicScanResultEmpty = findViewById(R.id.rlMusicScanResultEmpty);
     }
 
     @Override
@@ -134,6 +138,9 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
             if (null != rlMusicScanResult) {
                 rlMusicScanResult.setVisibility(View.VISIBLE);
             }
+            if (null != rlMusicScanResultEmpty) {
+                rlMusicScanResultEmpty.setVisibility(View.GONE);
+            }
             // 初始化适配器
             adapter = new MusicScanAdapter(R.layout.item_music_scan, musicInfos, this);
             LinearLayoutManager manager = new LinearLayoutManager(this);
@@ -167,7 +174,17 @@ public class MusicScanActivity extends BaseActivity implements View.OnClickListe
                 });
             }
         } else {
-            // 扫描本地音乐
+            // 扫描本地音乐数量为空
+            // 本地音乐数量大于0
+            if (null != rlMusicScanStart) {
+                rlMusicScanStart.setVisibility(View.GONE);
+            }
+            if (null != rlMusicScanResult) {
+                rlMusicScanResult.setVisibility(View.GONE);
+            }
+            if (null != rlMusicScanResultEmpty) {
+                rlMusicScanResultEmpty.setVisibility(View.VISIBLE);
+            }
         }
     }
 

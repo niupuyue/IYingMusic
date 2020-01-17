@@ -7,6 +7,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.paulniu.iyingmusic.App;
+import com.paulniu.iyingmusic.aidl.Song;
 import com.paulniu.iyingmusic.db.entity.SongInfo;
 
 import java.util.ArrayList;
@@ -129,6 +130,21 @@ public class SongUtils {
 
 
         return imagePath;
+    }
+
+    /**
+     * SongInfo对象转换成Song对象
+     */
+    public static List<Song> formatSongInfoToSong(List<SongInfo> songInfos){
+        if (null == songInfos || songInfos.size() <= 0){
+            return null;
+        }
+        List<Song> songs = new ArrayList<>();
+        for (SongInfo songInfo:songInfos){
+            Song song = new Song(songInfo.data);
+            songs.add(song);
+        }
+        return songs;
     }
 
 }

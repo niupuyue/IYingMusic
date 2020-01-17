@@ -123,4 +123,12 @@ public class StringUtils {
         return string != null && string.length() > 0 && !"null".equals(string);
     }
 
+    public static String getGenTimeMS(int misec) {
+        int min = misec / 1000 / 60;
+        int sec = (misec / 1000) % 60;
+        String minStr = min < 10 ? "0" + min : min + "";
+        String secStr = sec < 10 ? "0" + sec : sec + "";
+        return minStr + ":" + secStr;
+    }
+
 }

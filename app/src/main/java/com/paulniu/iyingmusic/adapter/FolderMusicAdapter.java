@@ -16,6 +16,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.db.entity.SongInfo;
 import com.paulniu.iyingmusic.interfaces.IOnFolderMusicListener;
+import com.paulniu.iyingmusic.utils.StringUtils;
 
 import java.util.List;
 
@@ -42,8 +43,8 @@ public class FolderMusicAdapter extends BaseQuickAdapter<SongInfo, FolderMusicAd
         helper.tvFolderMusicItemName.setText(item.songName);
         helper.tvFolderMusicItemArtist.setText(item.artist);
         helper.tvFolderMusicItemPath.setText(item.data);
-        helper.tvFolderMusicItemDuration.setText(String.valueOf(item.duration));
-        helper.tvFolderMusicItemSize.setText(String.valueOf(item.size));
+        helper.tvFolderMusicItemDuration.setText(StringUtils.getGenTimeMS(item.duration));
+        helper.tvFolderMusicItemSize.setText(String.valueOf(item.size >> 10 >> 10) + " MB");
 
         Glide.with(context).load(context.getResources().getDrawable(R.mipmap.ic_launcher)).into(helper.ivFolderMusicItemAvator);
 
@@ -60,7 +61,7 @@ public class FolderMusicAdapter extends BaseQuickAdapter<SongInfo, FolderMusicAd
         helper.llFolderMusicItemContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null != listener){
+                if (null != listener) {
                     listener.onMusicItemClick(item);
                 }
             }

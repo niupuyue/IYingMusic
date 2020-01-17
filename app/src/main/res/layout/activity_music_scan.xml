@@ -45,6 +45,20 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/rlMusicScanResultEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="数据为空呢" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/rlMusicScanResult"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

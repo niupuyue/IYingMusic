@@ -13,6 +13,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.db.entity.SongInfo;
 import com.paulniu.iyingmusic.interfaces.IOnMusicScanSelectMusicListener;
+import com.paulniu.iyingmusic.utils.StringUtils;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class MusicScanAdapter extends BaseQuickAdapter<SongInfo, MusicScanAdapte
         helper.tvMusicScanItemName.setText(item.songName);
         helper.tvMusicScanItemPath.setText(item.data);
         helper.tvMusicScanItemArtist.setText(item.artist);
-        helper.tvMusicScanItemDuration.setText(String.valueOf(item.duration));
+        helper.tvMusicScanItemDuration.setText(StringUtils.getGenTimeMS(item.duration));
         if (item.isShowChecked) {
             helper.cbMusicScanItemSelect.setVisibility(View.VISIBLE);
             if (item.isChecked) {
