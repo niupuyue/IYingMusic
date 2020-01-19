@@ -42,4 +42,7 @@
     <string name="CurSongListPop_playmode_random">随机播放</string>
     <string name="CurSongListPop_playmode_single">单曲循环</string>
     <string name="CurSongListPop_cleal_all">清空</string>
+    <string name="CurSongListPop_clear_all_title">确定清除播放列表吗？</string>
+    <string name="CurSongListPop_clear_all_confirm">确定</string>
+    <string name="CurSongListPop_clear_all_cancel">取消</string>
 </resources>

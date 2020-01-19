@@ -3,6 +3,7 @@ package com.paulniu.iyingmusic.widget.pop;
 import android.app.Activity;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -21,8 +22,10 @@ import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.adapter.CurrSongListAdapter;
 import com.paulniu.iyingmusic.db.entity.SongInfo;
 import com.paulniu.iyingmusic.interfaces.IOnCurrSongListListener;
+import com.paulniu.iyingmusic.interfaces.ITwoButtonListener;
 import com.paulniu.iyingmusic.utils.SPUtils;
 import com.paulniu.iyingmusic.utils.ScreenUtils;
+import com.paulniu.iyingmusic.widget.AdPub;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -161,15 +164,27 @@ public class CurrSongListPop extends PopupWindow implements View.OnClickListener
             if (playMode % 3 == 0) {
                 // 列表循环
                 tvCurrSongListPlayMode.setText(mActivity.getString(R.string.CurSongListPop_playmode_list));
-                tvCurrSongListPlayMode.setCompoundDrawables(mActivity.getResources().getDrawable(R.mipmap.ic_play_mode_list), null, null, null);
+                Drawable drawable = mActivity.getResources().getDrawable(R.mipmap.ic_play_mode_list);
+                if (null != drawable) {
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    tvCurrSongListPlayMode.setCompoundDrawables(drawable, null, null, null);
+                }
             } else if (playMode % 3 == 1) {
                 // 随机播放
                 tvCurrSongListPlayMode.setText(mActivity.getString(R.string.CurSongListPop_playmode_random));
-                tvCurrSongListPlayMode.setCompoundDrawables(mActivity.getResources().getDrawable(R.mipmap.ic_play_mode_random), null, null, null);
+                Drawable drawable = mActivity.getResources().getDrawable(R.mipmap.ic_play_mode_random);
+                if (null != drawable) {
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    tvCurrSongListPlayMode.setCompoundDrawables(drawable, null, null, null);
+                }
             } else {
                 // 单曲循环
                 tvCurrSongListPlayMode.setText(mActivity.getString(R.string.CurSongListPop_playmode_single));
-                tvCurrSongListPlayMode.setCompoundDrawables(mActivity.getResources().getDrawable(R.mipmap.ic_play_mode_single), null, null, null);
+                Drawable drawable = mActivity.getResources().getDrawable(R.mipmap.ic_play_mode_single);
+                if (null != drawable) {
+                    drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+                    tvCurrSongListPlayMode.setCompoundDrawables(drawable, null, null, null);
+                }
             }
         }
     }
@@ -222,6 +237,18 @@ public class CurrSongListPop extends PopupWindow implements View.OnClickListener
         switch (view.getId()) {
             case R.id.ivCurrSongListClearAll:
                 // 清空当前播放列表，并且停止当前音乐播放
+                AdPub.showViewTwoButton(mActivity, mActivity.getString(R.string.CurSongListPop_clear_all_title), mActivity.getString(R.string.CurSongListPop_clear_all_cancel), mActivity.getString(R.string.CurSongListPop_clear_all_confirm), new ITwoButtonListener() {
+                    @Override
+                    public void onLeftButtonOnclick() {
+                        // 取消，不需要做任何事情
+                    }
+
+                    @Override
+                    public void onRightButtonOnclick() {
+                        // 清空播放列表 TODO
+
+                    }
+                });
                 break;
             case R.id.tvCurrSongListPlayMode:
                 // 切换播放方式
