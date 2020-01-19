@@ -3,8 +3,10 @@ package com.paulniu.iyingmusic.utils;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
+import com.google.gson.GsonBuilder;
 import com.paulniu.iyingmusic.App;
 import com.paulniu.iyingmusic.Constant;
+import com.paulniu.iyingmusic.model.PlayListModel;
 
 /**
  * Coder: niupuyue (牛谱乐)
@@ -22,6 +24,8 @@ public class SPUtils {
     private static final String KEY_INT_MUSICSIZE = "musicSize";
 
     private static final String KEY_INT_PLAYMODE = "playmodel";
+
+    private static final String KEY_OBJECT_PLAYLIST = "playList";
 
     private static SharedPreferences sharedPreferences = null;
 
@@ -98,6 +102,32 @@ public class SPUtils {
     public static void setPlayMode(int mode) {
         SharedPreferences.Editor editor = getSharedPreferences().edit();
         editor.putInt(KEY_INT_PLAYMODE, mode);
+        editor.apply();
+    }
+
+    /**
+     * 获取播放列表
+     */
+    public static PlayListModel getPlayList() {
+        String value = getSharedPreferences().getString(KEY_OBJECT_PLAYLIST, null);
+        if (null != value) {
+            PlayListModel playListModel = new GsonBuilder().create().fromJson(value, PlayListModel.class);
+            return playListModel;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 设置播放列表
+     */
+    public static void setPlayList(PlayListModel playList) {
+        if (null == playList) {
+            return;
+        }
+        String value = new GsonBuilder().create().toJson(playList);
+        SharedPreferences.Editor editor = getSharedPreferences().edit();
+        editor.putString(KEY_OBJECT_PLAYLIST, value);
         editor.apply();
     }
 

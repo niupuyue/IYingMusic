@@ -7,6 +7,8 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.paulniu.iyingmusic.aidl.Song;
+import com.paulniu.iyingmusic.model.PlayListModel;
+import com.paulniu.iyingmusic.utils.SPUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -60,7 +62,7 @@ public class SongPlayController {
      * 是否可以点击下一首
      */
     private boolean isNext = true;
-    private int mPlayListId;
+    private int mPlayListId = -1;
 
     // MediaPlayer 是否调用过 setDataSource，
     // 否则第一次调用 changeSong 里的 _.reset 方法时 MediaPlayer 会抛 IllegalStateException
@@ -179,7 +181,12 @@ public class SongPlayController {
 
     //返回播放列表
     public List<Song> getSongsList() {
-        return mPlayList;
+        if (null == mPlayList || mPlayList.size() <= 0) {
+            // 当前播放列表中的数据为空，则从本地数据中获取数据
+            return SPUtils.getPlayList().songList;
+        } else {
+            return mPlayList;
+        }
     }
 
     //设置播放列表
@@ -193,10 +200,23 @@ public class SongPlayController {
         Song currentS = songs.get(mCurrentSong);
         mNotifyPlayListChanged.notify(currentS, current, id);
 
+        // 改变播放列表之后，将播放列表写入本地存储
+        if (null != songs && songs.size() > 0) {
+            PlayListModel model = new PlayListModel();
+            model.listId = id;
+            model.songList = songs;
+            SPUtils.setPlayList(model);
+        }
         return currentS;
     }
 
     public int getPlayListId() {
+        if (mPlayListId < 0) {
+            PlayListModel model = SPUtils.getPlayList();
+            if (null != model) {
+                return model.listId;
+            }
+        }
         return mPlayListId;
     }
 

@@ -168,8 +168,8 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
     public void onMusicItemClick(SongInfo musicInfo) {
         if (null != musicInfo && null != playControl) {
             try {
-                List<Song> curList = playControl.getPlayList();
-                if (null == curList || curList.size() <= 0) {
+                // 如果当前的播放列表和需要播放的列表不相等，则修改播放列表
+                if (playControl.getPlayListId() != folderInfo.folderId) {
                     playControl.setPlayList(SongUtils.formatSongInfoToSong(songInfos), -1, folderInfo.folderId);
                 }
             } catch (RemoteException e) {
@@ -177,16 +177,24 @@ public class FolderWithMusicListActivity extends BaseActivity implements View.On
             }
             // 点击音乐播放
             try {
+                // 获取当前正在播放的音乐下标(此下标表示的是真能够在播放的音乐在播放列表中的下标)
                 int currIndex = playControl.currentSongIndex();
+                // 如果正在播放的音乐和列表中对应的音乐是同一个
                 if (currIndex >= 0 && currIndex < songInfos.size() && TextUtils.equals(musicInfo.data, songInfos.get(currIndex).data) && musicInfo.id == songInfos.get(currIndex).id) {
                     if (null != playControl.currentSong()) {
                         String curPath = playControl.currentSong().path;
-                        if (!TextUtils.isEmpty(curPath) && TextUtils.equals(musicInfo.data, curPath) && playControl.status() != SongPlayController.STATUS_PLAYING) {
-                            playControl.resume();
-                            return;
+                        if (!TextUtils.isEmpty(curPath) && TextUtils.equals(musicInfo.data, curPath)) {
+                            if (playControl.status() == SongPlayController.STATUS_PLAYING){
+                                playControl.pause();
+                                return;
+                            }else if (playControl.status() == SongPlayController.STATUS_PAUSE){
+                                playControl.resume();
+                                return;
+                            }
                         }
                     }
                 }
+                // 重新播放
                 playControl.play(new Song(musicInfo.data));
             } catch (RemoteException e) {
                 e.printStackTrace();

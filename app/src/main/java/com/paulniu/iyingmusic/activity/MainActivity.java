@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.RemoteException;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
@@ -273,7 +274,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         playControl = IPlayControl.Stub.asInterface(service);
 
         // 获取当前歌曲播放列表 TODO
-//        currSongInfos = playControl.getPlayList();
+        try {
+            List<Song> songs = playControl.getPlayList();
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        }
     }
 
     /**

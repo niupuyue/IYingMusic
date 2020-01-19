@@ -7,12 +7,12 @@ import android.os.Parcelable;
  * Coder: niupuyue
  * Date: 2020/1/17
  * Time: 10:08
- * Desc:
+ * Desc: aidl中使用的SongInfo对象，为了更好的传递数据，只需要传递data数据
  * Version:
  */
 public class Song implements Parcelable {
 
-    //与客户端 DBSongInfo 中的 data 域对应，对于同一首歌曲（文件路径相同），两者应该相同
+    //与客户端 SongInfo 中的 data 域对应，对于同一首歌曲（文件路径相同），两者应该相同
     public String path;
 
     public Song(String path) {
