@@ -2,6 +2,7 @@ package com.paulniu.iyingmusic.utils;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -10,6 +11,7 @@ import com.paulniu.iyingmusic.App;
 import com.paulniu.iyingmusic.aidl.Song;
 import com.paulniu.iyingmusic.db.entity.SongInfo;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,6 +149,26 @@ public class SongUtils {
             songs.add(song);
         }
         return songs;
+    }
+
+    /**
+     * 将Song对象转换成SongInfo对象
+     */
+    public static SongInfo formatSongToSongInfo(Song song){
+
+    }
+
+    public static List<SongInfo> formatSongsToSongInfos(List<Song> songs){
+        if (null == songs || songs.size() <= 0){
+            return null;
+        }
+        List<SongInfo> songInfos;
+        for (Song song:songs){
+            if (null != song && !TextUtils.isEmpty(song.path)){
+                File tmpFile = new File(song.path);
+                App.getContext().getContentResolver().query(Uri.parse(song.path))
+            }
+        }
     }
 
 }

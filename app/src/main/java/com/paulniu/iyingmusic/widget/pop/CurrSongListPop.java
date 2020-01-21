@@ -117,8 +117,16 @@ public class CurrSongListPop extends PopupWindow implements View.OnClickListener
             rvCurrSongList.setLayoutManager(manager);
             rvCurrSongList.setAdapter(adapter);
         }
-        // 更新数据
+    }
 
+    /**
+     * 设置正在播放语音列表
+     */
+    public void setSongList(List<SongInfo> infos) {
+        this.currSongList.clear();
+        this.currSongList.addAll(infos);
+        adapter.setNewData(this.currSongList);
+        adapter.notifyDataSetChanged();
     }
 
     private void initSetup() {

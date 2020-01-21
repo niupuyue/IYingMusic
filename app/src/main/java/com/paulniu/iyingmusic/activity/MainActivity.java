@@ -33,8 +33,10 @@ import com.paulniu.iyingmusic.db.source.FolderInfoSource;
 import com.paulniu.iyingmusic.db.source.SongInfoSource;
 import com.paulniu.iyingmusic.interfaces.OnServiceConnect;
 import com.paulniu.iyingmusic.interfaces.PlayServiceCallback;
+import com.paulniu.iyingmusic.model.PlayListModel;
 import com.paulniu.iyingmusic.service.PlayServiceConnection;
 import com.paulniu.iyingmusic.service.SongPlayServiceManager;
+import com.paulniu.iyingmusic.utils.SPUtils;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 import com.paulniu.iyingmusic.widget.dialog.FolderAddDialog;
 import com.paulniu.iyingmusic.widget.pop.CurrSongListPop;
@@ -80,6 +82,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
     private SongInfo currSongInfo;
     private List<SongInfo> currSongInfos = new ArrayList<>();
+    private PlayListModel playListModel;
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
@@ -250,11 +253,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
                 // 改变播放状态
             }
         });
+        pop.setSongList(this.currSongInfos);
         pop.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     /**
      * 初始化广播
+     * 后续操作，比如更新状态栏，是需要通过广播的形式来实现，所以需要在此处
      */
     private void initBroadcastReceivers() {
 
@@ -276,6 +281,21 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         // 获取当前歌曲播放列表 TODO
         try {
             List<Song> songs = playControl.getPlayList();
+            if (null == songs || songs.size() <= 0){
+                // 当前缓存中没有正在播放的歌曲，从本地存储中获取
+                PlayListModel playListModel = SPUtils.getPlayList();
+                if (null != playListModel){
+                    songs = playListModel.songList;
+                    if (null != songs && songs.size() >0){
+                        this.playListModel = playListModel;
+                    }
+                }
+            }else {
+                playListModel = new PlayListModel();
+                playListModel.songList = songs;
+                playListModel.listId = playControl.getPlayListId();
+            }
+            // 此时获取到的有播放列表的对象 TODO
 
         } catch (RemoteException e) {
             e.printStackTrace();

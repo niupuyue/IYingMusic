@@ -17,6 +17,8 @@ import androidx.annotation.NonNull;
 
 import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.base.BaseActivity;
+import com.paulniu.iyingmusic.model.PlayListModel;
+import com.paulniu.iyingmusic.utils.SPUtils;
 import com.paulniu.iyingmusic.widget.pop.GrantPermissionPop;
 import com.paulniu.iyingmusic.widget.pop.ReGrantPermissionPop;
 
@@ -168,6 +170,9 @@ public class FirstActivity extends BaseActivity implements View.OnClickListener 
         }
         // 开启音乐播放服务
         startSongService();
+        // 倒计时的过程中，将存储在本地的正在播放的歌曲列表对象读取出来，并且设置到响应的Service中 TODO
+        PlayListModel playListModel = SPUtils.getPlayList();
+
     }
 
     private void reGrantPermission() {

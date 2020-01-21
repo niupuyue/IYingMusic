@@ -5,8 +5,10 @@ import android.os.Bundle;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentActivity;
 
+import com.paulniu.iyingmusic.model.PlayListModel;
 import com.paulniu.iyingmusic.service.SongPlayServiceManager;
 import com.paulniu.iyingmusic.utils.ImmersionBarUtils;
+import com.paulniu.iyingmusic.utils.SPUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import org.greenrobot.eventbus.EventBus;
