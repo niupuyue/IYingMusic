@@ -37,6 +37,7 @@ import com.paulniu.iyingmusic.model.PlayListModel;
 import com.paulniu.iyingmusic.service.PlayServiceConnection;
 import com.paulniu.iyingmusic.service.SongPlayServiceManager;
 import com.paulniu.iyingmusic.utils.SPUtils;
+import com.paulniu.iyingmusic.utils.SongUtils;
 import com.paulniu.iyingmusic.widget.MyAppTitle;
 import com.paulniu.iyingmusic.widget.dialog.FolderAddDialog;
 import com.paulniu.iyingmusic.widget.pop.CurrSongListPop;
@@ -246,11 +247,19 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void clearAll() {
                 // 清空本地播放列表
+                if (null != playControl) {
+                    try {
+                        playControl.setPlayList(null, -1, -1);
+                    } catch (RemoteException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
 
             @Override
             public void onChangePlayMode(int mode) {
                 // 改变播放状态
+
             }
         });
         pop.setSongList(this.currSongInfos);
@@ -278,24 +287,38 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
 
         playControl = IPlayControl.Stub.asInterface(service);
 
-        // 获取当前歌曲播放列表 TODO
+        // 获取当前歌曲播放列表 TODO 后面把这些操作放在firstActivity中，初始化完成之后，再跳到主页面
         try {
             List<Song> songs = playControl.getPlayList();
-            if (null == songs || songs.size() <= 0){
+            if (null == songs || songs.size() <= 0) {
                 // 当前缓存中没有正在播放的歌曲，从本地存储中获取
                 PlayListModel playListModel = SPUtils.getPlayList();
-                if (null != playListModel){
+                if (null != playListModel) {
                     songs = playListModel.songList;
-                    if (null != songs && songs.size() >0){
+                    if (null != songs && songs.size() > 0) {
                         this.playListModel = playListModel;
                     }
                 }
-            }else {
+            } else {
                 playListModel = new PlayListModel();
                 playListModel.songList = songs;
                 playListModel.listId = playControl.getPlayListId();
             }
             // 此时获取到的有播放列表的对象 TODO
+            if (null != playListModel && null != playListModel.songList && playListModel.listId > 0) {
+                // 将Song对象转换成SongInfo对象
+                currSongInfos = SongUtils.formatSongsToSongInfos(playListModel.songList);
+                if (null != playListModel.curSong) {
+                    currSongInfo = SongUtils.formatSongsToSongInfos(playListModel.curSong);
+                    // 设置当前正在播放的歌曲对象
+                    if (null != tvMainCurrMusicName) {
+                        tvMainCurrMusicName.setText(currSongInfo.songName);
+                    }
+                    if (null != tvMainCurrMusicArtist) {
+                        tvMainCurrMusicArtist.setText(currSongInfo.artist);
+                    }
+                }
+            }
 
         } catch (RemoteException e) {
             e.printStackTrace();
@@ -309,12 +332,17 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
      */
     @Override
     public void disConnected(ComponentName name) {
-
+        // 连接断开重新连接
     }
 
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    ////////////////底部当前播放的歌曲 开始
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
     @Override
     public void songChanged(Song song, int index, boolean isNext) {
-
+        // 歌曲改变，通知状态栏更新,发送广播
     }
 
     @Override
@@ -336,6 +364,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
     public void dataIsReady(IPlayControl mControl) {
 
     }
+
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
+    ////////////////底部当前播放的歌曲 结束
+    //////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////
 
     @Override
     public void onBackPressed() {

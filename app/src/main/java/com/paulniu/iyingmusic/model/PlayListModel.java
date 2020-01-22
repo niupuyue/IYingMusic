@@ -16,5 +16,6 @@ public class PlayListModel implements Serializable {
 
     public int listId;
     public List<Song> songList;
+    public Song curSong;
 
 }

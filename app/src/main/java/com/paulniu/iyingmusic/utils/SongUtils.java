@@ -154,21 +154,39 @@ public class SongUtils {
     /**
      * 将Song对象转换成SongInfo对象
      */
-    public static SongInfo formatSongToSongInfo(Song song){
-
-    }
-
-    public static List<SongInfo> formatSongsToSongInfos(List<Song> songs){
-        if (null == songs || songs.size() <= 0){
+    public static List<SongInfo> formatSongsToSongInfos(List<Song> songs) {
+        if (null == songs || songs.size() <= 0) {
             return null;
         }
-        List<SongInfo> songInfos;
-        for (Song song:songs){
-            if (null != song && !TextUtils.isEmpty(song.path)){
-                File tmpFile = new File(song.path);
-                App.getContext().getContentResolver().query(Uri.parse(song.path))
+        List<SongInfo> songInfos = new ArrayList<>();
+        for (Song song : songs) {
+            if (null != song && !TextUtils.isEmpty(song.path)) {
+                List<SongInfo> infos = getLocalStorageMusics(App.getContext());
+                if (null != infos && infos.size() > 0) {
+                    for (SongInfo songInfo : infos) {
+                        if (null != song && TextUtils.equals(song.path, songInfo.data)) {
+                            songInfos.add(songInfo);
+                            break;
+                        }
+                    }
+                }
             }
         }
+        return songInfos;
+    }
+
+    public static SongInfo formatSongsToSongInfos(Song song) {
+        if (null != song) {
+            List<SongInfo> infos = getLocalStorageMusics(App.getContext());
+            if (null != infos && infos.size() > 0) {
+                for (SongInfo songInfo : infos) {
+                    if (null != songInfo && TextUtils.equals(song.path, songInfo.data)) {
+                        return songInfo;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
 }
