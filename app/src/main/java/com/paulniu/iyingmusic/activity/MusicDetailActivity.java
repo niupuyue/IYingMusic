@@ -10,21 +10,23 @@ import com.paulniu.iyingmusic.base.BaseActivity;
 /**
  * Coder: niupuyue (牛谱乐)
  * Date: 2020-01-05
- * Time: 23:07
- * Desc: 关于我 页面
+ * Time: 23:11
+ * Desc: 音乐播放页面展示类(页面详情类)
  * Version:
  */
-public class AboutActivity extends BaseActivity implements View.OnClickListener {
+public class MusicDetailActivity extends BaseActivity implements View.OnClickListener {
 
-    public static Intent getIntent(Context context) {
-        Intent intent = new Intent(context, AboutActivity.class);
+    public static Intent getInstance(Context context) {
+        Intent intent = new Intent(context, MusicDetailActivity.class);
 
         return intent;
     }
 
     @Override
     public int initViewLayout() {
-        return R.layout.activity_about;
+        // 设置页面展示动画
+        overridePendingTransition(R.anim.view_enter, R.anim.view_exit);
+        return R.layout.activity_music_detail;
     }
 
     @Override
@@ -46,4 +48,5 @@ public class AboutActivity extends BaseActivity implements View.OnClickListener 
 
         }
     }
+
 }

@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.paulniu.iyingmusic.R;
 import com.paulniu.iyingmusic.base.BaseActivity;
+import com.paulniu.iyingmusic.widget.MyAppTitle;
 
 /**
  * Coder: niupuyue (牛谱乐)
@@ -16,10 +17,12 @@ import com.paulniu.iyingmusic.base.BaseActivity;
  */
 public class SettingActivity extends BaseActivity implements View.OnClickListener {
 
-    public static Intent getIntent(Context context){
-        Intent intent = new Intent(context,SettingActivity.class);
+    public static Intent getIntent(Context context) {
+        Intent intent = new Intent(context, SettingActivity.class);
         return intent;
     }
+
+    private MyAppTitle myAppTitle;
 
     @Override
     public int initViewLayout() {
@@ -28,12 +31,21 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
 
     @Override
     public void initViewById() {
-
+        myAppTitle = findViewById(R.id.myAppTitle);
     }
 
     @Override
     public void initData() {
-
+        if (null != myAppTitle) {
+            myAppTitle.initViewsVisible(true, true, false, false);
+            myAppTitle.setAppTitle(R.string.SettingActivity_title);
+            myAppTitle.setOnLeftButtonClickListener(new MyAppTitle.OnLeftButtonClickListener() {
+                @Override
+                public void onLeftButtonClick(View v) {
+                    onBackPressed();
+                }
+            });
+        }
     }
 
     @Override

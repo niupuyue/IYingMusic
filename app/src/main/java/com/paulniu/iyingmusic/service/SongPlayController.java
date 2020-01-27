@@ -183,7 +183,11 @@ public class SongPlayController {
     public List<Song> getSongsList() {
         if (null == mPlayList || mPlayList.size() <= 0) {
             // 当前播放列表中的数据为空，则从本地数据中获取数据
-            return SPUtils.getPlayList().songList;
+            if (null != SPUtils.getPlayList()){
+                return SPUtils.getPlayList().songList;
+            }else {
+                return null;
+            }
         } else {
             return mPlayList;
         }

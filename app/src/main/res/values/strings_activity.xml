@@ -42,4 +42,7 @@
     <!-- 文件夹音乐列表 FolderWithMusicListActivity -->
     <string name="FolderWithMusicListActivity_add_myfavorite_success">加入我的最爱成功！</string>
 
+    <!--设置页面 SettingActivity-->
+    <string name="SettingActivity_title">设置</string>
+
 </resources>

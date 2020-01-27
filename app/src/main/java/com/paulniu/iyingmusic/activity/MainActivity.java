@@ -111,6 +111,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         llSetting = findViewById(R.id.llSetting);
         llExit = findViewById(R.id.llExit);
 
+        llMainCurrMusic = findViewById(R.id.llMainCurrMusic);
         tvMainCurrMusicName = findViewById(R.id.tvMainCurrMusicName);
         tvMainCurrMusicArtist = findViewById(R.id.tvMainCurrMusicArtist);
         tvMainCurrMusicPlayState = findViewById(R.id.tvMainCurrMusicPlayState);
@@ -129,6 +130,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         }
         if (null != llExit) {
             llExit.setOnClickListener(this);
+        }
+
+        if (null != llMainCurrMusic) {
+            llMainCurrMusic.setOnClickListener(this);
         }
 
         if (null != drawerLayout) {
@@ -241,6 +246,14 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         startActivity(intent);
     }
 
+    /**
+     * 跳转到歌曲详情页面
+     */
+    private void jumpToMusicDetail() {
+        Intent intent = MusicDetailActivity.getInstance(this);
+        startActivity(intent);
+    }
+
     private void showSongListPop() {
         CurrSongListPop pop = new CurrSongListPop(this, new CurrSongListPop.OnCurrSongListListener() {
             // TODO 可以考虑是否放在pop中操作
@@ -288,6 +301,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
         playControl = IPlayControl.Stub.asInterface(service);
 
         // 获取当前歌曲播放列表 TODO 后面把这些操作放在firstActivity中，初始化完成之后，再跳到主页面
+        if (null == playControl){
+            return;
+        }
         try {
             List<Song> songs = playControl.getPlayList();
             if (null == songs || songs.size() <= 0) {
@@ -425,6 +441,10 @@ public class MainActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.tvMainCurrMusicPlayList:
                 // 显示当前音乐播放列表
                 showSongListPop();
+                break;
+            case R.id.llMainCurrMusic:
+                // 点击进入歌曲播放页面
+                jumpToMusicDetail();
                 break;
         }
     }
